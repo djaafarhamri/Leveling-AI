@@ -15,8 +15,8 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: ja3far
+          POSTGRES_PASSWORD: yyeB6wnR
           POSTGRES_DB: testdb
         ports:
           - 5432:5432
@@ -48,11 +48,19 @@ jobs:
         working-directory: ./backend
         run: npx prisma generate
 
+      # Backup database (optional but recommended)
+      - name: Backup database
+        working-directory: ./backend
+        run: |
+          pg_dump --format=custom --file=backup.dump $DATABASE_URL
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
       - name: Run database migrations
         working-directory: ./backend
-        run: npx prisma migrate dev --name init --skip-generate
+        run: npx prisma migrate deploy
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       # Lint and test backend
       - name: Lint backend
@@ -63,7 +71,7 @@ jobs:
         working-directory: ./backend
         run: npm test  # Add a test script in your backend package.json
         env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       # Install dependencies for frontend
       - name: Install frontend dependencies
