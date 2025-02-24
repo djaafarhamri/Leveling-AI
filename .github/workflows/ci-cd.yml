@@ -48,14 +48,6 @@ jobs:
         working-directory: ./backend
         run: npx prisma generate
 
-      # Backup database (optional but recommended)
-      - name: Backup database
-        working-directory: ./backend
-        run: |
-          pg_dump --format=custom --file=backup.dump $DATABASE_URL
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
       - name: Run database migrations
         working-directory: ./backend
         run: npx prisma migrate deploy
