@@ -11,6 +11,20 @@ on:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,6 +39,21 @@ jobs:
         working-directory: ./backend
         run: npm install
 
+      # Set up Prisma
+      - name: Install Prisma CLI
+        working-directory: ./backend
+        run: npm install -g prisma
+
+      - name: Generate Prisma Client
+        working-directory: ./backend
+        run: npx prisma generate
+
+      - name: Run database migrations
+        working-directory: ./backend
+        run: npx prisma migrate dev --name init --skip-generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
+
       # Lint and test backend
       - name: Lint backend
         working-directory: ./backend
@@ -33,6 +62,8 @@ jobs:
       - name: Test backend
         working-directory: ./backend
         run: npm test  # Add a test script in your backend package.json
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
 
       # Install dependencies for frontend
       - name: Install frontend dependencies
@@ -60,11 +91,6 @@ jobs:
         with:
           node-version: 18
 
-      # Build backend
-      - name: Build backend
-        working-directory: ./backend
-        run: npm run build  # Add a build script in your backend package.json
-
       # Build frontend
       - name: Build frontend
         working-directory: ./frontend
@@ -82,13 +108,14 @@ jobs:
         with:
           node-version: 18
 
-      # Deploy frontend (example: Vercel)
-      - name: Deploy frontend to Vercel
-        working-directory: ./frontend
+      # Deploy to Vercel
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Add your Vercel token to GitHub Secrets
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}  # Add your Vercel org ID to GitHub Secrets
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}  # Add your Vercel project ID to GitHub Secrets
         run: |
-          npm install -g vercel
-          vercel deploy --prod --token=$VERCEL_TOKEN
+          vercel --prod --token=$VERCEL_TOKEN
