@@ -1,0 +1,94 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18  # Use Node.js 18 (or your preferred version)
+
+      # Install dependencies for backend
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
+
+      # Lint and test backend
+      - name: Lint backend
+        working-directory: ./backend
+        run: npm run lint  # Add a lint script in your backend package.json
+
+      - name: Test backend
+        working-directory: ./backend
+        run: npm test  # Add a test script in your backend package.json
+
+      # Install dependencies for frontend
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      # Lint and test frontend
+      - name: Lint frontend
+        working-directory: ./frontend
+        run: npm run lint  # Add a lint script in your frontend package.json
+
+      - name: Test frontend
+        working-directory: ./frontend
+        run: npm test  # Add a test script in your frontend package.json
+
+  build:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Build backend
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build  # Add a build script in your backend package.json
+
+      # Build frontend
+      - name: Build frontend
+        working-directory: ./frontend
+        run: npm run build  # Vite automatically provides a build script
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Deploy frontend (example: Vercel)
+      - name: Deploy frontend to Vercel
+        working-directory: ./frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}  # Add your Vercel token to GitHub Secrets
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}  # Add your Vercel org ID to GitHub Secrets
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}  # Add your Vercel project ID to GitHub Secrets
+        run: |
+          npm install -g vercel
+          vercel deploy --prod --token=$VERCEL_TOKEN
