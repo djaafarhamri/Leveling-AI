@@ -2,6 +2,33 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+const fs = require("fs");
+
+function printTree(dir, indent = "") {
+  const ignoredDirs = new Set(["node_modules", ".git"]); // Directories to ignore
+
+  const files = fs.readdirSync(dir).filter(file => !ignoredDirs.has(file));
+
+  files.forEach((file, index) => {
+    const fullPath = path.join(dir, file);
+    const isLast = index === files.length - 1;
+    const prefix = isLast ? "└── " : "├── ";
+
+    console.log(indent + prefix + file);
+
+    if (fs.statSync(fullPath).isDirectory()) {
+      printTree(fullPath, indent + (isLast ? "    " : "│   "));
+    }
+  });
+}
+
+// Start from the parent directory
+const parentDir = path.resolve(__dirname, "..");
+
+console.log(`Project Structure (Starting from: ${parentDir}):`);
+printTree(parentDir);
+
+
 // Middleware for parsing JSON
 app.use(express.json());
 
