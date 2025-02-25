@@ -15,8 +15,8 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: ja3far
-          POSTGRES_PASSWORD: yyeB6wnR
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: testdb
         ports:
           - 5432:5432
@@ -32,13 +32,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
 
-      - name: Install dependencies
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: npm install
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
         run: npm install
 
       # Set up Prisma
       - name: Install Prisma CLI
+        working-directory: ./backend
         run: npm install -g prisma
 
       - name: Generate Prisma Client
@@ -71,9 +77,14 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install backend dependencies
+        working-directory: ./backend
         run: npm install
-
+  
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+  
       # Build frontend
       - name: Build frontend
         working-directory: ./frontend
@@ -98,7 +109,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install Vercel CLI
         run: npm install -g vercel
