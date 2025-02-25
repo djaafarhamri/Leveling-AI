@@ -34,6 +34,10 @@ app.use(express.json());
 
 // API routes
 app.get('/api/test', (req, res) => {
+  
+console.log(`Project Structure (Starting from: ${parentDir}):`);
+printTree(parentDir);
+
   res.json("test 1")
 });
 
