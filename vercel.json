@@ -1,0 +1,18 @@
+{
+    "version": 2,
+    "buildCommand": "npm install && npm run build",
+    "functions": {
+      "backend/index.js": {
+        "runtime": "nodejs18.x",
+        "memory": 1024,
+        "maxDuration": 10
+      }
+    },
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "backend/index.js"
+      }
+    ]
+  }
+  
