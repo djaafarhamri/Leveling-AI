@@ -1,7 +1,18 @@
 {
-    "buildCommand": "npm run build",
-    "installCommand": "npm install",
-    "startCommand": "npm run start",
-    "ignoreBuildStep": false
+    "version": 2,
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node",
+        "config": {
+          "buildCommand": "npm run build"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "backend/index.js"
+      }
+    ]
   }
-  
