@@ -8,8 +8,19 @@
     ],
     "routes": [
       {
+        "src": "/api/(.*)",
+        "dest": "/backend/index.js"
+      },
+      {
+        "src": "/(.*\\.(js|css|ico|png|jpg|svg|json))",
+        "dest": "/backend/index.js"
+      },
+      {
         "src": "/(.*)",
-        "dest": "backend/index.js"
+        "dest": "/backend/index.js",
+        "headers": {
+          "cache-control": "s-maxage=1, stale-while-revalidate"
+        }
       }
     ]
   }
