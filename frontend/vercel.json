@@ -10,5 +10,9 @@
     }
   ],
   "routes": [{ "src": "/(.*)", "dest": "/index.html" }],
-  "gitIntegration": { "deployOnPush": false }
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  }
 }

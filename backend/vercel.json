@@ -7,5 +7,9 @@
     }
   ],
   "routes": [{ "src": "/(.*)", "dest": "/api/index.js" }],
-  "gitIntegration": { "deployOnPush": false }
+  "git": {
+    "deploymentEnabled": {
+      "main": false
+    }
+  }
 }
