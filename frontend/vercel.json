@@ -9,7 +9,12 @@
       }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/index.html" }],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ],
   "git": {
     "deploymentEnabled": {
       "main": false
