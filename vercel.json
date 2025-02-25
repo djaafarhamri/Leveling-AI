@@ -13,7 +13,6 @@
         "dest": "api/index.js"
       }
     ],
-    "builds": [],
     "ignoreCommand": "npm run build"
   }
   
