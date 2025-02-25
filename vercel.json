@@ -2,17 +2,19 @@
     "version": 2,
     "builds": [
       {
-        "src": "package.json",
-        "use": "@vercel/node",
-        "config": {
-          "buildCommand": "npm run build"
-        }
+        "src": "backend/index.js",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "backend/index.js"
+      },
       {
         "src": "/(.*)",
         "dest": "backend/index.js"
       }
     ]
   }
+  
