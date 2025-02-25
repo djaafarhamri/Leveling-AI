@@ -1,27 +1,23 @@
-const path = require('path')
-const express = require('express')
+const express = require('express');
+const path = require('path');
+const app = express();
 
-const app = express()
+// Your API routes
+app.get('/api/test', (req, res) => {
+  res.json("test success")
+});
 
-// Serve static files from the frontend build
-const frontendBuildPath = path.join(__dirname, '../frontend/dist')
-app.use(express.static(frontendBuildPath))
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-// API routes
-app.get('/api/data', (req, res) => {
-  res.json({ message: 'Hello from the backend!' })
-})
-
-// Fallback to index.html for client-side routing (e.g., React Router)
+// All other GET requests not handled before will return your frontend app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendBuildPath, 'index.html'))
-})
+  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
 
-// Export the Express app for Vercel to use
-
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});
 
-module.exports = app
+module.exports = app;
