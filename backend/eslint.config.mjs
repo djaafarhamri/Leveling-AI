@@ -1,11 +1,11 @@
-import globals from "globals"
-import pluginJs from "@eslint/js"
+import globals from 'globals'
+import pluginJs from '@eslint/js'
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   { 
-    files: ["**/*.js"], 
-    languageOptions: { sourceType: "commonjs" } 
+    files: ['**/*.js'], 
+    languageOptions: { sourceType: 'commonjs' } 
   },
   { 
     languageOptions: { globals: globals.node } 
@@ -13,7 +13,8 @@ export default [
   pluginJs.configs.recommended,
   {
     rules: {
-      semi: ["error", "never"]
+      semi: ['error', 'never'],
+      quotes: ['error', 'single']
     }
   }
 ]

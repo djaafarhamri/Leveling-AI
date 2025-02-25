@@ -11,8 +11,8 @@ app.use((req, res, next) => {
 })
 
 // API Route to return file tree
-app.get("/api/test", (req, res) => {
-  res.json("fileTree")
+app.get('/api/test', (req, res) => {
+  res.json('fileTree')
 })
 
 
