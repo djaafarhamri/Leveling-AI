@@ -19,3 +19,11 @@ app.get('*', (req, res) => {
 
 // Export the Express app for Vercel to use
 module.exports = app;
+
+// Start the server locally if not in a Vercel environment
+if (process.env.VERCEL !== '1') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
