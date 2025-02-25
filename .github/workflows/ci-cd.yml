@@ -60,9 +60,9 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # LINTER_RULES_PATH: .github/linters  # Optional: Custom linting rules
+          LINTER_RULES_PATH: .github/linters  # Optional: Custom linting rules
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-          EXCLUDED_PATHS: "build/,.vercel/,.next/,coverage/,.prisma/,backend/prisma/migrations/,frontend/src/vite-env.d.ts,frontend/vite.config.ts,frontend/tsconfig.app.json"
+          FILTER_REGEX_EXCLUDE: (node_modules/|dist/|build/|\.vercel/|\.next/|coverage/|\.prisma/|backend/prisma/migrations/|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
 
       # - name: Test backend
       #   working-directory: ./backend
