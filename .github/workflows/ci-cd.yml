@@ -61,7 +61,6 @@ jobs:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: .github/linters  # Optional: Custom linting rules
-          JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.js # Or your specific ESLint config file
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
       # - name: Test backend
