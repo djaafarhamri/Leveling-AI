@@ -41,7 +41,7 @@ app.get("/api/test", (req, res) => {
 });
 
 // Serve static files from frontend build
-const staticPath = path.join(__dirname, '../frontend/dist');
+const staticPath = path.join(__dirname, './public');
 console.log('Static path:', staticPath);
 app.use(express.static(staticPath));
 
