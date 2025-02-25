@@ -7,8 +7,7 @@
     "backend"
   ],
   "scripts": {
-    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
-    "dev": "node backend/index.js",
+    "build": "cd frontend && npm install && npm run build && cd .. && mkdir -p public && cp -r frontend/dist/* public/ && cd backend && npm install && npx prisma generate",
     "start": "node backend/index.js"
   },
   "devDependencies": {
