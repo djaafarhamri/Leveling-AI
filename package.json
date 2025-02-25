@@ -1,0 +1,14 @@
+{
+  "name": "leveling-ai",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
+    "dev": "node backend/index.js",
+    "start": "node backend/index.js"
+  }
+}
