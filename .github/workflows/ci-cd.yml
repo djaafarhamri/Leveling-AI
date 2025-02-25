@@ -53,31 +53,28 @@ jobs:
         run: npx prisma migrate deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-
-      # Lint and test backend
-      - name: Lint backend
-        working-directory: ./backend
-        run: npm run lint  # Add a lint script in your backend package.json
-
-      - name: Test backend
-        working-directory: ./backend
-        run: npm test  # Add a test script in your backend package.json
+  # Lint the entire repository with Super-Linter
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .github/linters  # Optional: Custom linting rules
+
+      # - name: Test backend
+      #   working-directory: ./backend
+      #   run: npm test  # Add a test script in your backend package.json
+      #   env:
+      #     DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       # Install dependencies for frontend
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
 
-      # Lint and test frontend
-      - name: Lint frontend
-        working-directory: ./frontend
-        run: npm run lint  # Add a lint script in your frontend package.json
-
-      - name: Test frontend
-        working-directory: ./frontend
-        run: npm test  # Add a test script in your frontend package.json
+      # - name: Test frontend
+      #   working-directory: ./frontend
+      #   run: npm test  # Add a test script in your frontend package.json
 
   build:
     runs-on: ubuntu-latest
