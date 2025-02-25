@@ -115,4 +115,4 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}  # Add your Vercel org ID to GitHub Secrets
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}  # Add your Vercel project ID to GitHub Secrets
         run: |
-          vercel --prod --token=$VERCEL_TOKEN
+          vercel --prod --token="$VERCEL_TOKEN"
