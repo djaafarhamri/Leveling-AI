@@ -12,8 +12,5 @@
       "src": "/(.*)",
       "dest": "backend/index.js"
     }
-  ],
-  "build": {
-    "installCommand": "npm install --include=dev"
-  }
+  ]
 }
