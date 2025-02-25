@@ -3,7 +3,7 @@
     "buildCommand": "npm install && npm run build",
     "functions": {
       "backend/index.js": {
-        "runtime": "nodejs22.x",
+        "runtime": "nodejs18@18.16.0",
         "memory": 1024,
         "maxDuration": 10
       }
