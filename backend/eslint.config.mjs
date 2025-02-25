@@ -14,7 +14,8 @@ export default [
   {
     rules: {
       semi: ['error', 'never'],
-      quotes: ['error', 'single']
+      quotes: ['error', 'single'],
+      'no-multiple-empty-lines': ['error', { 'max': 1 }] // No more than 1 blank line
     }
   }
 ]
