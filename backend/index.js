@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 const app = express();
 
 // Middleware for parsing JSON
@@ -12,35 +11,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Function to generate file tree
-function generateTree(dir) {
-  const ignoredDirs = new Set(["node_modules", ".git"]);
-  let tree = [];
-
-  fs.readdirSync(dir).forEach(file => {
-    if (!ignoredDirs.has(file)) {
-      const fullPath = path.join(dir, file);
-      const isDirectory = fs.statSync(fullPath).isDirectory();
-      tree.push({
-        name: file,
-        type: isDirectory ? "directory" : "file",
-        children: isDirectory ? generateTree(fullPath) : null,
-      });
-    }
-  });
-
-  return tree;
-}
-
 // API Route to return file tree
 app.get("/api/test", (req, res) => {
-  const parentDir = path.resolve(__dirname, "..");
-  const fileTree = generateTree(parentDir);
-  res.json(fileTree);
+  res.json("fileTree");
 });
 
 // Serve static files from frontend build
-const staticPath = path.join(__dirname, './public');
+const staticPath = path.join(__dirname, './dist');
 console.log('Static path:', staticPath);
 app.use(express.static(staticPath));
 
