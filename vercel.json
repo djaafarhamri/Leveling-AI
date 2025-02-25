@@ -1,26 +1,19 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "frontend/package.json",
-        "use": "@vercel/static-build",
-        "config": { "distDir": "frontend/dist" }
-      },
-      {
-        "src": "backend/index.js",
-        "use": "@vercel/node"
+    "functions": {
+      "backend/index.js": {
+        "runtime": "nodejs22.x",
+        "memory": 1024,
+        "maxDuration": 10
       }
-    ],
+    },
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "backend/index.js"
+        "dest": "api/index.js"
       }
     ],
-    "functions": {
-      "backend/index.js": {
-        "runtime": "nodejs22.x"
-      }
-    }
+    "builds": [],
+    "ignoreCommand": "npm run build"
   }
   
