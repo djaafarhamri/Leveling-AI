@@ -3,7 +3,6 @@ const path = require('path');
 const fs = require('fs');
 const app = express();
 
-
 // Middleware for parsing JSON
 app.use(express.json());
 
@@ -15,7 +14,7 @@ app.use((req, res, next) => {
 
 // Function to generate file tree
 function generateTree(dir) {
-  const ignoredDirs = new Set(["node_modules", ".git"]); // Ignore these
+  const ignoredDirs = new Set(["node_modules", ".git"]);
   let tree = [];
 
   fs.readdirSync(dir).forEach(file => {
@@ -35,7 +34,7 @@ function generateTree(dir) {
 
 // API Route to return file tree
 app.get("/api/test", (req, res) => {
-  const parentDir = path.resolve(__dirname, ".."); // Start from `../`
+  const parentDir = path.resolve(__dirname, "..");
   const fileTree = generateTree(parentDir);
   res.json(fileTree);
 });
@@ -51,10 +50,13 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(staticPath, 'index.html'));
 });
 
-// Set the port based on the environment
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only run app.listen if not in a Vercel environment
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
 
+// Export app for Vercel
 module.exports = app;
