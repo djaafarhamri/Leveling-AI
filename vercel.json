@@ -1,40 +1,12 @@
+// Start the server locally if not in a Vercel environment
 {
-    "version": 2,
-    "builds": [
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/dist",
+  "framework": "vite",
+  "rewrites": [
       {
-        "src": "frontend/package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "dist",
-          "buildCommand": "cd frontend && npm install && npm run build"
-        }
-      },
-      {
-        "src": "backend/index.js",
-        "use": "@vercel/node",
-        "config": {
-          "includeFiles": ["backend/**"]
-        }
+          "source": "/api/(.*)",
+          "destination": "/api/index.js"
       }
-    ],
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "/backend/index.js"
-      },
-      {
-        "handle": "filesystem"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/frontend/dist/$1"
-      },
-      {
-        "src": "/",
-        "dest": "/frontend/dist/index.html"
-      }
-    ],
-    "env": {
-      "NODE_ENV": "production"
-    }
-  }
+  ]
+}
