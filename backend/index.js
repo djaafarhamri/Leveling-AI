@@ -12,7 +12,7 @@ app.use((req, res, next) => {
 
 // API Route to return file tree
 app.get('/api/test', (req, res) => {
-  res.json('fileTree')
+  res.json('test sucess')
 })
 
 const PORT = process.env.PORT || 3000
