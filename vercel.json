@@ -1,18 +1,18 @@
 {
     "version": 2,
-    "buildCommand": "npm install && npm run build",
-    "functions": {
-      "api/index.js": {
-        "runtime": "nodejs18@22.14.0",
-        "memory": 1024,
-        "maxDuration": 10
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/node",
+        "config": {
+          "buildCommand": "npm run build"
+        }
       }
-    },
+    ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "api/index.js"
+        "dest": "backend/index.js"
       }
     ]
   }
-  
