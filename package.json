@@ -7,7 +7,7 @@
     "backend"
   ],
   "scripts": {
-    "build": "npm run build --workspace=frontend && npm run build --workspace=backend",
+    "build": "npm install && npm run build --workspace=frontend && npm run build --workspace=backend",
     "dev": "node backend/index.js",
     "start": "node backend/index.js",
     "postinstall": "npm install --include=dev"
