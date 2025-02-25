@@ -53,13 +53,16 @@ jobs:
         run: npx prisma migrate deploy
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  # Lint the entire repository with Super-Linter
+          
+      # Run Super-Linter using .ecrc for exclusions
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LINTER_RULES_PATH: .github/linters  # Optional: Custom linting rules
+          JAVASCRIPT_ES_CONFIG_FILE: .eslintrc.js # Or your specific ESLint config file
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
 
       # - name: Test backend
       #   working-directory: ./backend
