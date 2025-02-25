@@ -1,23 +1,32 @@
+console.log('Server starting...');
 const express = require('express');
 const path = require('path');
 const app = express();
 
-// Parse JSON bodies
-app.use(express.json());
+// Console log to verify server is running
+console.log('Express server started');
 
-// API routes should come before the static file serving
+// API routes (replace with your actual routes)
 app.get('/api/test', (req, res) => {
-  res.json("test 200")
+  console.log('API route hit:', req.path);
+  res.json("test success")
 });
 
-// Serve static files from the React app
-const frontendBuildPath = path.join(__dirname, '../frontend/dist');
-app.use(express.static(frontendBuildPath));
+// Log all incoming requests for debugging
+app.use((req, res, next) => {
+  console.log('Request received:', req.method, req.path);
+  next();
+});
 
-// Important: This catch-all route must come after API routes
-// This handles client-side routing by serving index.html for any unmatched routes
+// Serve static files
+const frontendPath = path.join(__dirname, '../frontend/dist');
+console.log('Serving static files from:', frontendPath);
+app.use(express.static(frontendPath));
+
+// For any request that doesn't match an asset or API route, send the index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  console.log('Fallback route hit, serving index.html');
+  res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
