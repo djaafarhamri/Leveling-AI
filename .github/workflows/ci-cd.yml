@@ -91,11 +91,16 @@ jobs:
         with:
           node-version: 18
 
+      # Add this step to install frontend dependencies
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
       # Build frontend
       - name: Build frontend
         working-directory: ./frontend
-        run: npm run build  # Vite automatically provides a build script
-
+        run: npm run build
+  
   deploy:
     runs-on: ubuntu-latest
     needs: build
