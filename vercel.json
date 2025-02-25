@@ -1,18 +1,19 @@
 {
-    "version": 2,
-    "functions": {
-      "backend/index.js": {
-        "runtime": "nodejs22.x",
-        "memory": 1024,
-        "maxDuration": 10
-      }
-    },
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "api/index.js"
-      }
-    ],
-    "ignoreCommand": "npm run build"
+  "version": 2,
+  "functions": {
+    "backend/index.js": {
+      "runtime": "nodejs22.x",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backend/index.js"
+    }
+  ],
+  "build": {
+    "installCommand": "npm install --include=dev"
   }
-  
+}
