@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx prisma generate",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "dotenv -e .env.test -- jest",
+    "test:watch": "dotenv -e .env.test -- jest --watch",
+    "test:coverage": "dotenv -e .env.test -- jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -16,16 +18,22 @@
     "@prisma/client": "^6.4.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.26.9",
     "@eslint/js": "^9.21.0",
     "@types/node": "^22.13.5",
+    "babel-jest": "^29.7.0",
+    "dotenv": "^16.4.7",
+    "dotenv-cli": "^8.0.0",
     "eslint": "^9.21.0",
+    "eslint-plugin-jest": "^28.11.0",
     "globals": "^16.0.0",
-    "prisma": "^6.4.1"
+    "jest": "^29.7.0",
+    "prisma": "^6.4.1",
+    "supertest": "^7.0.0"
   }
 }
