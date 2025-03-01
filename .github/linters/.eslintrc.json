@@ -1,0 +1,27 @@
+{
+    "ignorePatterns": ["dist", "frontend/src/setupTests.ts"],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended-type-checked"
+    ],
+    "overrides": [
+      {
+        "files": ["**/*.{ts,tsx}"],
+        "parserOptions": {
+          "ecmaVersion": 2020,
+          "project": ["./frontend/tsconfig.node.json", "./frontend/tsconfig.app.json"],
+          "tsconfigRootDir": "."
+        },
+        "plugins": ["react-hooks", "react-refresh"],
+        "rules": {
+          "react-hooks/rules-of-hooks": "error",
+          "react-hooks/exhaustive-deps": "warn",
+          "react-refresh/only-export-components": [
+            "warn",
+            { "allowConstantExport": true }
+          ]
+        }
+      }
+    ]
+  }
+  
