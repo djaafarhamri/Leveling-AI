@@ -1,26 +1,35 @@
 {
-  "ignorePatterns": ["dist", "frontend/src/setupTests.ts"],
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended-type-checked"
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
   ],
-  "overrides": [
-    {
-      "files": ["**/*.{ts,tsx}"],
-      "parserOptions": {
-        "ecmaVersion": 2020,
-        "project": ["./tsconfig.node.json", "./tsconfig.app.json"],
-        "tsconfigRootDir": "."
-      },
-      "plugins": ["react-hooks", "react-refresh"],
-      "rules": {
-        "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warn",
-        "react-refresh/only-export-components": [
-          "warn",
-          { "allowConstantExport": true }
-        ]
-      }
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "react-hooks"],
+  "rules": {
+    "react/react-in-jsx-scope": "off", // Not needed in React 17+
+    "react/prop-types": "off", // Not needed with TypeScript
+    "@typescript-eslint/explicit-module-boundary-types": "off", // Optional
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
     }
-  ]
+  }
 }

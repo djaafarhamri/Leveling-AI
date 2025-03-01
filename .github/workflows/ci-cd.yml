@@ -100,12 +100,8 @@ jobs:
         uses: github/super-linter@v4
         env:
           DEFAULT_BRANCH: working
+          DEFAULT_WORKSPACE: frontend
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: .github/linters
-          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
-          FILTER_REGEX_INCLUDE: (frontend/.*\.(js|ts|tsx|jsx|json|css|scss|md))
-          FILTER_REGEX_EXCLUDE: (frontend/node_modules/|frontend/dist/|frontend/build/|\.next/|coverage/|frontend/src/setupTests\.ts|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
-          TYPESCRIPT_DEFAULT_STYLE: ts-standard
 
   build-backend:
     needs: [lint-and-test-backend]
