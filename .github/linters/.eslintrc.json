@@ -1,0 +1,7 @@
+{
+  "extends": "standard-with-typescript",
+  "parserOptions": {
+    "project": "./frontend/tsconfig.json"
+  },
+  "ignorePatterns": ["**/setupTests.ts", "**/vite-env.d.ts", "**/vite.config.ts", "**/tsconfig.*.json", "node_modules/", "dist/", "build/"]
+}

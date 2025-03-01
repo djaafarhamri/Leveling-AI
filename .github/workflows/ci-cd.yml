@@ -95,19 +95,6 @@ jobs:
         run:
           npm test
 
-          # Create a custom .eslintrc.json for the super-linter
-      - name: Create ESLint config
-        run: |
-          cat > .github/linters/.eslintrc.json << EOF
-          {
-            "extends": "standard-with-typescript",
-            "parserOptions": {
-              "project": "./frontend/tsconfig.json"
-            },
-            "ignorePatterns": ["**/setupTests.ts", "**/vite-env.d.ts", "**/vite.config.ts", "**/tsconfig.*.json", "node_modules/", "dist/", "build/"]
-          }
-          EOF
-
       # Run Super-Linter for frontend
       - name: Run Super-Linter
         uses: github/super-linter@v4
