@@ -3,14 +3,14 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - working  # Trigger on push to the working branch
+      - working # Trigger on push to the working branch
     paths:
-      - 'backend/**'
-      - 'frontend/**'
-      - '.github/**'  # Changed from '.github/workflows/**' to '.github/**'
+      - "backend/**"
+      - "frontend/**"
+      - ".github/**" # Changed from '.github/workflows/**' to '.github/**'
   pull_request:
     branches:
-      - main  # Still trigger on PRs to main
+      - main # Still trigger on PRs to main
 
 jobs:
   lint-and-test-backend:
@@ -92,7 +92,21 @@ jobs:
       # Run Frontend Tests
       - name: Run frontend tests
         working-directory: ./frontend
-        run: npm test
+        run:
+          npm test
+
+          # Create a custom .eslintrc.json for the super-linter
+      - name: Create ESLint config
+        run: |
+          cat > .github/linters/.eslintrc.json << EOF
+          {
+            "extends": "standard-with-typescript",
+            "parserOptions": {
+              "project": "./frontend/tsconfig.json"
+            },
+            "ignorePatterns": ["**/setupTests.ts", "**/vite-env.d.ts", "**/vite.config.ts", "**/tsconfig.*.json", "node_modules/", "dist/", "build/"]
+          }
+          EOF
 
       # Run Super-Linter for frontend
       - name: Run Super-Linter
@@ -100,8 +114,11 @@ jobs:
         env:
           DEFAULT_BRANCH: working
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LINTER_RULES_PATH: .github/linters
+          TYPESCRIPT_ES_CONFIG_FILE: .eslintrc.json
           FILTER_REGEX_INCLUDE: (frontend/.*\.(js|ts|tsx|jsx|json|css|scss|md))
-          FILTER_REGEX_EXCLUDE: (frontend/node_modules/|frontend/dist/|frontend/build/|\.next/|coverage/|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
+          FILTER_REGEX_EXCLUDE: (frontend/node_modules/|frontend/dist/|frontend/build/|\.next/|coverage/|frontend/src/setupTests\.ts|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
+          TYPESCRIPT_DEFAULT_STYLE: ts-standard
 
   build-backend:
     needs: [lint-and-test-backend]
@@ -118,12 +135,12 @@ jobs:
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
-  
+
       # Build backend
       - name: Build backend
         working-directory: ./backend
         run: npm run build
-      
+
       - name: Upload backend build artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -145,12 +162,12 @@ jobs:
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
-  
+
       # Build frontend
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
-      
+
       - name: Upload frontend build artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -165,7 +182,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }}  # Personal access token with repo scope
+          token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }} # Personal access token with repo scope
 
       - name: Configure Git
         run: |
@@ -186,7 +203,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: main  # Explicitly checkout the main branch after promotion
+          ref: main # Explicitly checkout the main branch after promotion
 
       - name: Deploy Backend to Render
         run: |
@@ -199,7 +216,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          ref: main  # Explicitly checkout the main branch after promotion
+          ref: main # Explicitly checkout the main branch after promotion
 
       - name: Install Node.js
         uses: actions/setup-node@v3
