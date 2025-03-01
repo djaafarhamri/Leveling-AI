@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - working  # Trigger on push to the main branch
   pull_request:
     branches:
       - main  # Trigger on pull requests to the main branch
@@ -74,7 +74,7 @@ jobs:
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
-          DEFAULT_BRANCH: main
+          DEFAULT_BRANCH: working
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           FILTER_REGEX_EXCLUDE: (node_modules/|dist/|build/|\.vercel/|\.next/|coverage/|\.prisma/|backend/prisma/migrations/|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
 
