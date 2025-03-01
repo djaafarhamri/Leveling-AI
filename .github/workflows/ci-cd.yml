@@ -3,11 +3,11 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - working  # Changed to trigger on push to the working branch
+      - working  # Trigger on push to the working branch
     paths:
       - 'backend/**'
       - 'frontend/**'
-      - '.github/workflows/**'
+      - '.github/**'  # Changed from '.github/workflows/**' to '.github/**'
   pull_request:
     branches:
       - main  # Still trigger on PRs to main
@@ -18,7 +18,7 @@ jobs:
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
-      workflow: ${{ steps.filter.outputs.workflow }}
+      github: ${{ steps.filter.outputs.github }}  # Added output for .github folder changes
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -34,12 +34,12 @@ jobs:
               - 'backend/**'
             frontend:
               - 'frontend/**'
-            workflow:
-              - '.github/workflows/**'
+            github:
+              - '.github/**'  # Added filter for .github folder
 
   lint-and-test-backend:
     needs: changes
-    if: ${{ needs.changes.outputs.backend == 'true' }}
+    if: ${{ needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true' }}  # Run if backend OR github files change
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -102,7 +102,7 @@ jobs:
 
   lint-and-test-frontend:
     needs: changes
-    if: ${{ needs.changes.outputs.frontend == 'true' }}
+    if: ${{ needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true' }}  # Run if frontend OR github files change
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -133,7 +133,7 @@ jobs:
 
   build-backend:
     needs: [changes, lint-and-test-backend]
-    if: ${{ needs.changes.outputs.backend == 'true' && (success() || needs.lint-and-test-backend.result == 'skipped') }}
+    if: ${{ (needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true') && success() }}  # Updated condition
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -161,7 +161,7 @@ jobs:
 
   build-frontend:
     needs: [changes, lint-and-test-frontend]
-    if: ${{ needs.changes.outputs.frontend == 'true' && (success() || needs.lint-and-test-frontend.result == 'skipped') }}
+    if: ${{ (needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true') && success() }}  # Updated condition
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -192,9 +192,9 @@ jobs:
     needs: [build-backend, build-frontend, changes]
     if: |
       github.ref == 'refs/heads/working' && 
-      ((needs.changes.outputs.backend == 'true' && needs.build-backend.result == 'success') || 
-       (needs.changes.outputs.frontend == 'true' && needs.build-frontend.result == 'success') ||
-       (needs.changes.outputs.backend != 'true' && needs.changes.outputs.frontend != 'true'))
+      (((needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true') && needs.build-backend.result == 'success') || 
+       ((needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true') && needs.build-frontend.result == 'success') ||
+       (needs.changes.outputs.backend != 'true' && needs.changes.outputs.frontend != 'true' && needs.changes.outputs.github != 'true'))
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -217,7 +217,7 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     needs: [auto-promote-to-main]
-    if: ${{ success() && needs.changes.outputs.backend == 'true' }}
+    if: ${{ success() && (needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true') }}  # Updated condition
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -231,7 +231,7 @@ jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
     needs: [auto-promote-to-main]
-    if: ${{ success() && needs.changes.outputs.frontend == 'true' }}
+    if: ${{ success() && (needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true') }}  # Updated condition
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
