@@ -13,33 +13,7 @@ on:
       - main  # Still trigger on PRs to main
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      backend: ${{ steps.filter.outputs.backend }}
-      frontend: ${{ steps.filter.outputs.frontend }}
-      github: ${{ steps.filter.outputs.github }}  # Added output for .github folder changes
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Check for file changes
-        uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            backend:
-              - 'backend/**'
-            frontend:
-              - 'frontend/**'
-            github:
-              - '.github/**'  # Added filter for .github folder
-
   lint-and-test-backend:
-    needs: changes
-    if: ${{ needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true' }}  # Run if backend OR github files change
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -101,8 +75,6 @@ jobs:
           FILTER_REGEX_EXCLUDE: (backend/node_modules/|backend/dist/|backend/build/|\.prisma/|backend/prisma/migrations/)
 
   lint-and-test-frontend:
-    needs: changes
-    if: ${{ needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true' }}  # Run if frontend OR github files change
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -132,8 +104,7 @@ jobs:
           FILTER_REGEX_EXCLUDE: (frontend/node_modules/|frontend/dist/|frontend/build/|\.next/|coverage/|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
 
   build-backend:
-    needs: [changes, lint-and-test-backend]
-    if: ${{ (needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true') && success() }}  # Updated condition
+    needs: [lint-and-test-backend]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -160,8 +131,7 @@ jobs:
           path: backend/dist
 
   build-frontend:
-    needs: [changes, lint-and-test-frontend]
-    if: ${{ (needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true') && success() }}  # Updated condition
+    needs: [lint-and-test-frontend]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -189,12 +159,7 @@ jobs:
 
   auto-promote-to-main:
     runs-on: ubuntu-latest
-    needs: [build-backend, build-frontend, changes]
-    if: |
-      github.ref == 'refs/heads/working' && 
-      (((needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true') && needs.build-backend.result == 'success') || 
-       ((needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true') && needs.build-frontend.result == 'success') ||
-       (needs.changes.outputs.backend != 'true' && needs.changes.outputs.frontend != 'true' && needs.changes.outputs.github != 'true'))
+    needs: [build-backend, build-frontend]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -217,7 +182,6 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     needs: [auto-promote-to-main]
-    if: ${{ success() && (needs.changes.outputs.backend == 'true' || needs.changes.outputs.github == 'true') }}  # Updated condition
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -231,7 +195,6 @@ jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
     needs: [auto-promote-to-main]
-    if: ${{ success() && (needs.changes.outputs.frontend == 'true' || needs.changes.outputs.github == 'true') }}  # Updated condition
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
