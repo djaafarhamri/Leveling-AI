@@ -9,3 +9,4 @@ excludes:
   - "frontend/src/vite-env.d.ts"
   - "frontend/vite.config.ts"
   - "frontend/tsconfig.app.json"
+  - "frontend/src/setupTests.ts
