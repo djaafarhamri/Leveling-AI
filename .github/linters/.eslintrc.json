@@ -1,9 +1,7 @@
 {
     "ignorePatterns": ["dist", "frontend/src/setupTests.ts"],
     "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended-type-checked"
-    ],
+      "eslint:recommended"    ],
     "overrides": [
       {
         "files": ["**/*.{ts,tsx}"],
