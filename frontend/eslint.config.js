@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint'
 export default tseslint.config(
   { ignores: ['dist', 'frontend/src/setupTests.ts'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [js.configs.recommended, ...tseslint.configs.recommendedTypeChecked],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
