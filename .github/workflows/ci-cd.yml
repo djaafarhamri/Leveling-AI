@@ -3,17 +3,13 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - working # Trigger on push to the working branch
-    paths:
-      - "backend/**"
-      - "frontend/**"
-      - ".github/**" # Changed from '.github/workflows/**' to '.github/**'
+      - main  # Trigger on push to the main branch
   pull_request:
     branches:
-      - main # Still trigger on PRs to main
+      - main  # Trigger on pull requests to the main branch
 
 jobs:
-  lint-and-test-backend:
+  lint-and-test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -42,6 +38,10 @@ jobs:
         working-directory: ./backend
         run: npm install
 
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm install
+
       # Set up Prisma
       - name: Install Prisma CLI
         working-directory: ./backend
@@ -65,47 +65,22 @@ jobs:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/testdb
           NODE_ENV: test
 
-      # Run Super-Linter for backend
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: working
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_INCLUDE: (backend/.*\.(js|ts|json|md))
-          FILTER_REGEX_EXCLUDE: (backend/node_modules/|backend/dist/|backend/build/|\.prisma/|backend/prisma/migrations/)
-
-  lint-and-test-frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22
-
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm install
-
       # Run Frontend Tests
       - name: Run frontend tests
         working-directory: ./frontend
-        run:
-          npm test
+        run: npm test
 
-      # Run Super-Linter for frontend
+      # Run Super-Linter
       - name: Run Super-Linter
         uses: github/super-linter@v4
         env:
-          DEFAULT_BRANCH: working
-          DEFAULT_WORKSPACE: frontend
+          DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILTER_REGEX_EXCLUDE: (node_modules/|dist/|build/|\.vercel/|\.next/|coverage/|\.prisma/|backend/prisma/migrations/|frontend/src/vite-env\.d\.ts|frontend/vite\.config\.ts|frontend/tsconfig\.app\.json)
 
-  build-backend:
-    needs: [lint-and-test-backend]
+  build:
     runs-on: ubuntu-latest
+    needs: lint-and-test
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -118,88 +93,53 @@ jobs:
       - name: Install backend dependencies
         working-directory: ./backend
         run: npm install
-
-      # Build backend
-      - name: Build backend
-        working-directory: ./backend
-        run: npm run build
-
-      - name: Upload backend build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: backend-build
-          path: backend/dist
-
-  build-frontend:
-    needs: [lint-and-test-frontend]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
+  
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm install
-
+  
       # Build frontend
       - name: Build frontend
         working-directory: ./frontend
         run: npm run build
 
-      - name: Upload frontend build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend-build
-          path: frontend/dist
-
+      # Build backend (if needed)
+      - name: Build backend
+        working-directory: ./backend
+        run: npm run build
   auto-promote-to-main:
+      runs-on: ubuntu-latest
+      needs: [build]
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 0
+            token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }} # Personal access token with repo scope
+
+        - name: Configure Git
+          run: |
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+
+        - name: Merge working branch to main
+          run: |
+            git checkout main
+            git pull
+            git merge --no-ff working -m "Auto-merge working to main [skip ci]"
+            git push origin main
+
+  deploy:
     runs-on: ubuntu-latest
-    needs: [build-backend, build-frontend]
+    needs: build
+    if: github.ref == 'refs/heads/main'  # Only deploy on main branch
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          token: ${{ secrets.WORKFLOW_GITHUB_TOKEN }} # Personal access token with repo scope
-
-      - name: Configure Git
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
-      - name: Merge working branch to main
-        run: |
-          git checkout main
-          git pull
-          git merge --no-ff working -m "Auto-merge working to main [skip ci]"
-          git push origin main
-
-  deploy-backend:
-    runs-on: ubuntu-latest
-    needs: [auto-promote-to-main]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: main # Explicitly checkout the main branch after promotion
 
       - name: Deploy Backend to Render
         run: |
           curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
-
-  deploy-frontend:
-    runs-on: ubuntu-latest
-    needs: [auto-promote-to-main]
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          ref: main # Explicitly checkout the main branch after promotion
 
       - name: Install Node.js
         uses: actions/setup-node@v3
