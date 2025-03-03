@@ -1,4 +1,0 @@
-backend/prisma/migrations/
-frontend/src/vite-env.d.ts
-frontend/vite.config.ts
-frontend/tsconfig.app.json
