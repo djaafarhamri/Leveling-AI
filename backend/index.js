@@ -1,24 +1,24 @@
-const express = require('express')
-const app = express()
+import express from 'express';
+import logger from './logging/logger';
+const app = express();
 
 // Middleware for parsing JSON
-app.use(express.json())
+app.use(express.json());
 
-// Log incoming requests for debugging
+// Log incoming requests
 app.use((req, res, next) => {
-  console.log(`Request: ${req.method} ${req.url}`)
-  next()
-})
-
+  logger.info(`Request: ${req.method} ${req.url}`);
+  next();
+});
 // API Route to return file tree
 app.get('/api/test', (req, res) => {
-  res.json('test sucess')
-})
+  res.json('test sucess');
+});
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+  logger.info(`Server is running on port ${PORT}`);
+});
 
 // Export app for Vercel
-module.exports = app
+export default app;
