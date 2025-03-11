@@ -1,21 +1,21 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card"
-import { Button } from "./ui/button"
-import { Progress } from "./ui/progress"
-import { Shield, Swords, Trophy, AlertTriangle } from "lucide-react"
-import { useTheme } from "./theme-provider"
-import { useToast } from "../hooks/use-toast"
+import { useState } from 'react';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Button } from './ui/button';
+import { Progress } from './ui/progress';
+import { Shield, Swords, Trophy, AlertTriangle } from 'lucide-react';
+import { useTheme } from './theme-provider';
+import { useToast } from '../hooks/use-toast';
 
 interface BossChallengeProps {
-  name: string
-  description: string
-  difficulty: "Normal" | "Hard" | "Epic"
-  requirements: string[]
-  reward: string
-  timeLimit: string
-  progress: number
+  name: string;
+  description: string;
+  difficulty: 'Normal' | 'Hard' | 'Epic';
+  requirements: string[];
+  reward: string;
+  timeLimit: string;
+  progress: number;
 }
 
 export function BossChallenge({
@@ -27,42 +27,42 @@ export function BossChallenge({
   timeLimit,
   progress,
 }: BossChallengeProps) {
-  const { theme } = useTheme()
-  const { toast } = useToast()
-  const [accepted, setAccepted] = useState(false)
+  const { theme } = useTheme();
+  const { toast } = useToast();
+  const [accepted, setAccepted] = useState(false);
 
   // Get theme-specific classes
   const getBossClass = () => {
     switch (theme) {
-      case "elden-ring":
-        return "elden-ring-boss"
-      case "league":
-        return "league-boss"
-      case "wow":
-        return "wow-boss"
+      case 'elden-ring':
+        return 'elden-ring-boss';
+      case 'league':
+        return 'league-boss';
+      case 'wow':
+        return 'wow-boss';
       default:
-        return ""
+        return '';
     }
-  }
+  };
 
   const getDifficultyColor = () => {
     switch (difficulty) {
-      case "Normal":
-        return "text-green-500"
-      case "Hard":
-        return "text-amber-500"
-      case "Epic":
-        return "text-red-500"
+      case 'Normal':
+        return 'text-green-500';
+      case 'Hard':
+        return 'text-amber-500';
+      case 'Epic':
+        return 'text-red-500';
     }
-  }
+  };
 
   const handleAccept = () => {
-    setAccepted(true)
+    setAccepted(true);
     toast({
-      title: "Boss Challenge Accepted!",
+      title: 'Boss Challenge Accepted!',
       description: `You've accepted the challenge: ${name}`,
-    })
-  }
+    });
+  };
 
   return (
     <Card className={`${getBossClass()} relative overflow-hidden`}>
@@ -119,11 +119,10 @@ export function BossChallenge({
           </Button>
         ) : (
           <Button className="w-full" disabled={progress < 100}>
-            {progress < 100 ? "In Progress..." : "Claim Reward"}
+            {progress < 100 ? 'In Progress...' : 'Claim Reward'}
           </Button>
         )}
       </CardFooter>
     </Card>
-  )
+  );
 }
-

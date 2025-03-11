@@ -1,14 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { ThemeProvider } from "./components/theme-provider"
-import { Toaster } from "./components/ui/toaster"
-import { ThemePlaceholder } from "./components/theme-placeholder"
-import Dashboard from "./pages/dashboard"
-import CharacterPage from "./pages/character"
-import ChallengesPage from "./pages/challenges"
-import SettingsPage from "./pages/settings"
-import LoginPage from "./pages/login"
-import SignupPage from "./pages/signup"
-import Layout from "./components/layout"
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './components/theme-provider';
+import { Toaster } from './components/ui/toaster';
+import { ThemePlaceholder } from './components/theme-placeholder';
+import Dashboard from './pages/dashboard';
+import CharacterPage from './pages/character';
+import ChallengesPage from './pages/challenges';
+import SettingsPage from './pages/settings';
+import LoginPage from './pages/login';
+import SignupPage from './pages/signup';
+import Layout from './components/layout';
 
 function App() {
   return (
@@ -29,8 +29,7 @@ function App() {
       </Router>
       <Toaster />
     </ThemeProvider>
-  )
+  );
 }
 
-export default App
-
+export default App;

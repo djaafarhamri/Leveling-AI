@@ -1,32 +1,32 @@
-import { Card, CardContent, CardFooter } from "./ui/card"
-import { Progress } from "./ui/progress"
-import type { LucideIcon } from "lucide-react"
-import { useTheme } from "./theme-provider"
+import { Card, CardContent, CardFooter } from './ui/card';
+import { Progress } from './ui/progress';
+import type { LucideIcon } from 'lucide-react';
+import { useTheme } from './theme-provider';
 
 interface StatCardProps {
-  title: string
-  value: number
-  icon: LucideIcon
-  description: string
-  color: string
+  title: string;
+  value: number;
+  icon: LucideIcon;
+  description: string;
+  color: string;
 }
 
 export default function StatCard({ title, value, icon: Icon, description, color }: StatCardProps) {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   // Add theme-specific class names
   const getThemeClasses = () => {
     switch (theme) {
-      case "elden-ring":
-        return "elden-ring-text-glow"
-      case "league":
-        return "league-text-glow"
-      case "wow":
-        return "wow-text-glow"
+      case 'elden-ring':
+        return 'elden-ring-text-glow';
+      case 'league':
+        return 'league-text-glow';
+      case 'wow':
+        return 'wow-text-glow';
       default:
-        return ""
+        return '';
     }
-  }
+  };
 
   return (
     <Card>
@@ -40,6 +40,5 @@ export default function StatCard({ title, value, icon: Icon, description, color 
       </CardContent>
       <CardFooter className="text-xs text-muted-foreground">{description}</CardFooter>
     </Card>
-  )
+  );
 }
-

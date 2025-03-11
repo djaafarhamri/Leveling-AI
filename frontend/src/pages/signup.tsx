@@ -1,9 +1,16 @@
-import { Link } from "react-router-dom"
-import { Button } from "../components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../components/ui/card"
-import { Input } from "../components/ui/input"
-import { Label } from "../components/ui/label"
-import { Trophy } from "lucide-react"
+import { Link } from 'react-router-dom';
+import { Button } from '../components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '../components/ui/card';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Trophy } from 'lucide-react';
 
 export default function SignupPage() {
   return (
@@ -16,7 +23,9 @@ export default function SignupPage() {
             </div>
           </div>
           <CardTitle className="text-2xl">Create an account</CardTitle>
-          <CardDescription>Enter your information to start your self-improvement journey</CardDescription>
+          <CardDescription>
+            Enter your information to start your self-improvement journey
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
@@ -39,7 +48,7 @@ export default function SignupPage() {
         <CardFooter className="flex flex-col space-y-4">
           <Button className="w-full">Sign Up</Button>
           <div className="text-center text-sm">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link to="/login" className="text-primary hover:underline">
               Sign in
             </Link>
@@ -47,6 +56,5 @@ export default function SignupPage() {
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
-

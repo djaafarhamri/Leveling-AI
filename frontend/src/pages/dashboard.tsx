@@ -1,24 +1,24 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Progress } from "../components/ui/progress"
-import { Button } from "../components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { Trophy, Zap, Brain, Dumbbell, Heart, Star } from "lucide-react"
-import StatCard from "../components/stat-card"
-import DailyChallenge from "../components/daily-challenge"
-import { useToast } from "../hooks/use-toast"
-import { BossChallenge } from "../components/boss-challenge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Progress } from '../components/ui/progress';
+import { Button } from '../components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Trophy, Zap, Brain, Dumbbell, Heart, Star } from 'lucide-react';
+import StatCard from '../components/stat-card';
+import DailyChallenge from '../components/daily-challenge';
+import { useToast } from '../hooks/use-toast';
+import { BossChallenge } from '../components/boss-challenge';
 
 export default function Dashboard() {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const handleClaimReward = () => {
     toast({
-      title: "Daily reward claimed!",
+      title: 'Daily reward claimed!',
       description: "You've earned 50 XP and unlocked a new challenge.",
-    })
-  }
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -34,7 +34,13 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Vigor" value={72} icon={Heart} description="Physical health & energy" color="text-red-500" />
+        <StatCard
+          title="Vigor"
+          value={72}
+          icon={Heart}
+          description="Physical health & energy"
+          color="text-red-500"
+        />
         <StatCard
           title="Intelligence"
           value={85}
@@ -65,9 +71,9 @@ export default function Dashboard() {
           description="Complete a series of focused work sessions with minimal breaks to defeat the Procrastination Demon."
           difficulty="Normal"
           requirements={[
-            "Complete 5 pomodoro sessions (25 min each)",
-            "Take breaks of only 5 minutes between sessions",
-            "No social media during work sessions",
+            'Complete 5 pomodoro sessions (25 min each)',
+            'Take breaks of only 5 minutes between sessions',
+            'No social media during work sessions',
           ]}
           reward="Unlock 'Deep Focus' skill + 150 XP"
           timeLimit="48 hours"
@@ -143,12 +149,13 @@ export default function Dashboard() {
         <TabsContent value="achievements" className="mt-4">
           <Card>
             <CardContent className="pt-6">
-              <p className="text-center text-muted-foreground">Your achievements will appear here</p>
+              <p className="text-center text-muted-foreground">
+                Your achievements will appear here
+              </p>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
-
