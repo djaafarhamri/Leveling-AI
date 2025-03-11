@@ -1,26 +1,32 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Button } from "../components/ui/button"
-import { Input } from "../components/ui/input"
-import { Label } from "../components/ui/label"
-import { Switch } from "../components/ui/switch"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select"
-import { Separator } from "../components/ui/separator"
-import { useToast } from "../hooks/use-toast"
-import { useTheme } from "../components/theme-provider"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Label } from '../components/ui/label';
+import { Switch } from '../components/ui/switch';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../components/ui/select';
+import { Separator } from '../components/ui/separator';
+import { useToast } from '../hooks/use-toast';
+import { Theme, useTheme } from '../components/theme-provider';
 
 export default function SettingsPage() {
-  const { toast } = useToast()
-  const { theme, setTheme } = useTheme()
+  const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
 
   const handleSave = () => {
     toast({
-      title: "Settings saved",
-      description: "Your settings have been saved successfully.",
-    })
-  }
+      title: 'Settings saved',
+      description: 'Your settings have been saved successfully.',
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -114,7 +120,7 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="theme">Theme</Label>
-                <Select value={theme} onValueChange={(value) => setTheme(value as any)}>
+                <Select value={theme} onValueChange={(value) => setTheme(value as Theme)}>
                   <SelectTrigger id="theme">
                     <SelectValue placeholder="Select theme" />
                   </SelectTrigger>
@@ -130,7 +136,9 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="animations">Animations</Label>
-                  <p className="text-sm text-muted-foreground">Enable animations throughout the app</p>
+                  <p className="text-sm text-muted-foreground">
+                    Enable animations throughout the app
+                  </p>
                 </div>
                 <Switch id="animations" defaultChecked />
               </div>
@@ -197,7 +205,9 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label htmlFor="auto-suggest">Auto-Suggest Challenges</Label>
-                  <p className="text-sm text-muted-foreground">AI will suggest challenges based on your stats</p>
+                  <p className="text-sm text-muted-foreground">
+                    AI will suggest challenges based on your stats
+                  </p>
                 </div>
                 <Switch id="auto-suggest" defaultChecked />
               </div>
@@ -220,7 +230,9 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="daily-reminder">Daily Challenge Reminder</Label>
-                    <p className="text-sm text-muted-foreground">Receive a reminder for uncompleted daily challenges</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive a reminder for uncompleted daily challenges
+                    </p>
                   </div>
                   <Switch id="daily-reminder" defaultChecked />
                 </div>
@@ -228,7 +240,9 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="weekly-summary">Weekly Progress Summary</Label>
-                    <p className="text-sm text-muted-foreground">Receive a weekly summary of your progress</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive a weekly summary of your progress
+                    </p>
                   </div>
                   <Switch id="weekly-summary" defaultChecked />
                 </div>
@@ -236,7 +250,9 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="achievement">Achievement Notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive notifications when you earn achievements</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive notifications when you earn achievements
+                    </p>
                   </div>
                   <Switch id="achievement" defaultChecked />
                 </div>
@@ -258,7 +274,9 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
                     <Label htmlFor="push-notifications">Push Notifications</Label>
-                    <p className="text-sm text-muted-foreground">Receive push notifications in your browser</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive push notifications in your browser
+                    </p>
                   </div>
                   <Switch id="push-notifications" defaultChecked />
                 </div>
@@ -299,6 +317,5 @@ export default function SettingsPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
-

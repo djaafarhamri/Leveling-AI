@@ -1,20 +1,22 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { WorldMap } from "../components/world-map"
-import { LoreBook } from "../components/lore-book"
-import { RegionChallenges } from "../components/region-challenges"
-import { Map, BookOpen, Trophy } from "lucide-react"
+import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { WorldMap } from '../components/world-map';
+import { LoreBook } from '../components/lore-book';
+import { RegionChallenges } from '../components/region-challenges';
+import { Map, BookOpen, Trophy } from 'lucide-react';
 
 export default function WorldPage() {
-  const [selectedRegion, setSelectedRegion] = useState("mountains-of-focus")
+  const [selectedRegion] = useState('mountains-of-focus');
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">World of Productiva</h1>
-        <p className="text-muted-foreground">Explore regions, discover lore, and complete challenges</p>
+        <p className="text-muted-foreground">
+          Explore regions, discover lore, and complete challenges
+        </p>
       </div>
 
       <Tabs defaultValue="map">
@@ -48,6 +50,5 @@ export default function WorldPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
-

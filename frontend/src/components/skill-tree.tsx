@@ -1,110 +1,109 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import { Button } from "./ui/button"
-import { useTheme } from "./theme-provider"
-import { useToast } from "../hooks/use-toast"
-import { Brain, Dumbbell, Heart, Star, Lock, CheckCircle2, AlertCircle, Zap } from "lucide-react"
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Button } from './ui/button';
+import { useTheme } from './theme-provider';
+import { useToast } from '../hooks/use-toast';
+import { Brain, Dumbbell, Heart, Star, Lock, CheckCircle2, AlertCircle, Zap } from 'lucide-react';
 
 // Define skill types and structure
-type SkillCategory = "Vigor" | "Intelligence" | "Strength" | "Charisma"
+type SkillCategory = 'Vigor' | 'Intelligence' | 'Strength' | 'Charisma';
 
 interface Skill {
-  id: string
-  name: string
-  description: string
-  level: number
-  maxLevel: number
-  category: SkillCategory
-  icon: React.ElementType
-  unlocked: boolean
-  acquired: boolean
-  cost: number
-  requires?: string[]
-  effects: string[]
+  id: string;
+  name: string;
+  description: string;
+  level: number;
+  maxLevel: number;
+  category: SkillCategory;
+  icon: React.ElementType;
+  unlocked: boolean;
+  acquired: boolean;
+  cost: number;
+  requires?: string[];
+  effects: string[];
 }
 
 interface SkillNodeProps {
-  skill: Skill
-  onClick: (skill: Skill) => void
-  canUnlock: boolean
-  skillPoints: number
+  skill: Skill;
+  onClick: (skill: Skill) => void;
+  canUnlock: boolean;
+  skillPoints: number;
 }
 
 // Individual skill node component
-function SkillNode({ skill, onClick, canUnlock, skillPoints }: SkillNodeProps) {
-  const { theme } = useTheme()
-
+function SkillNode({ skill, onClick, skillPoints }: SkillNodeProps) {
+  const { theme } = useTheme();
   // Get theme-specific classes
   const getNodeClass = () => {
-    const baseClass = "relative p-3 rounded-lg border transition-all duration-200"
+    const baseClass = 'relative p-3 rounded-lg border transition-all duration-200';
 
     if (skill.acquired) {
       switch (theme) {
-        case "elden-ring":
-          return `${baseClass} bg-amber-900/50 border-amber-500 elden-ring-skill-acquired`
-        case "league":
-          return `${baseClass} bg-blue-900/50 border-blue-500 league-skill-acquired`
-        case "wow":
-          return `${baseClass} bg-blue-900/50 border-yellow-500 wow-skill-acquired`
+        case 'elden-ring':
+          return `${baseClass} bg-amber-900/50 border-amber-500 elden-ring-skill-acquired`;
+        case 'league':
+          return `${baseClass} bg-blue-900/50 border-blue-500 league-skill-acquired`;
+        case 'wow':
+          return `${baseClass} bg-blue-900/50 border-yellow-500 wow-skill-acquired`;
         default:
-          return `${baseClass} bg-primary/20 border-primary`
+          return `${baseClass} bg-primary/20 border-primary`;
       }
     } else if (skill.unlocked && skillPoints >= skill.cost) {
       switch (theme) {
-        case "elden-ring":
-          return `${baseClass} bg-amber-950/30 border-amber-700/50 hover:border-amber-500 cursor-pointer elden-ring-skill-available`
-        case "league":
-          return `${baseClass} bg-blue-950/30 border-blue-700/50 hover:border-blue-500 cursor-pointer league-skill-available`
-        case "wow":
-          return `${baseClass} bg-blue-950/30 border-yellow-700/50 hover:border-yellow-500 cursor-pointer wow-skill-available`
+        case 'elden-ring':
+          return `${baseClass} bg-amber-950/30 border-amber-700/50 hover:border-amber-500 cursor-pointer elden-ring-skill-available`;
+        case 'league':
+          return `${baseClass} bg-blue-950/30 border-blue-700/50 hover:border-blue-500 cursor-pointer league-skill-available`;
+        case 'wow':
+          return `${baseClass} bg-blue-950/30 border-yellow-700/50 hover:border-yellow-500 cursor-pointer wow-skill-available`;
         default:
-          return `${baseClass} bg-muted border-muted-foreground hover:border-primary cursor-pointer`
+          return `${baseClass} bg-muted border-muted-foreground hover:border-primary cursor-pointer`;
       }
     } else if (skill.unlocked) {
-      return `${baseClass} bg-muted/20 border-muted-foreground/50 opacity-70`
+      return `${baseClass} bg-muted/20 border-muted-foreground/50 opacity-70`;
     } else {
-      return `${baseClass} bg-muted/10 border-muted-foreground/30 opacity-50`
+      return `${baseClass} bg-muted/10 border-muted-foreground/30 opacity-50`;
     }
-  }
+  };
 
   const getIconColor = () => {
     if (skill.acquired) {
       switch (skill.category) {
-        case "Vigor":
-          return "text-red-400"
-        case "Intelligence":
-          return "text-blue-400"
-        case "Strength":
-          return "text-amber-400"
-        case "Charisma":
-          return "text-purple-400"
+        case 'Vigor':
+          return 'text-red-400';
+        case 'Intelligence':
+          return 'text-blue-400';
+        case 'Strength':
+          return 'text-amber-400';
+        case 'Charisma':
+          return 'text-purple-400';
       }
     } else if (skill.unlocked && skillPoints >= skill.cost) {
       switch (skill.category) {
-        case "Vigor":
-          return "text-red-500/70"
-        case "Intelligence":
-          return "text-blue-500/70"
-        case "Strength":
-          return "text-amber-500/70"
-        case "Charisma":
-          return "text-purple-500/70"
+        case 'Vigor':
+          return 'text-red-500/70';
+        case 'Intelligence':
+          return 'text-blue-500/70';
+        case 'Strength':
+          return 'text-amber-500/70';
+        case 'Charisma':
+          return 'text-purple-500/70';
       }
     } else {
-      return "text-muted-foreground/50"
+      return 'text-muted-foreground/50';
     }
-  }
+  };
 
   return (
     <div
       className={getNodeClass()}
       onClick={() => {
         if (skill.unlocked && !skill.acquired && skillPoints >= skill.cost) {
-          onClick(skill)
+          onClick(skill);
         }
       }}
     >
@@ -144,7 +143,7 @@ function SkillNode({ skill, onClick, canUnlock, skillPoints }: SkillNodeProps) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 // Skill connection lines
@@ -153,31 +152,34 @@ function SkillConnector({
   to,
   acquired,
 }: {
-  from: { x: number; y: number }
-  to: { x: number; y: number }
-  acquired: boolean
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  acquired: boolean;
 }) {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   const getLineColor = () => {
     if (acquired) {
       switch (theme) {
-        case "elden-ring":
-          return "stroke-amber-500"
-        case "league":
-          return "stroke-blue-500"
-        case "wow":
-          return "stroke-yellow-500"
+        case 'elden-ring':
+          return 'stroke-amber-500';
+        case 'league':
+          return 'stroke-blue-500';
+        case 'wow':
+          return 'stroke-yellow-500';
         default:
-          return "stroke-primary"
+          return 'stroke-primary';
       }
     } else {
-      return "stroke-muted-foreground/30"
+      return 'stroke-muted-foreground/30';
     }
-  }
+  };
 
   return (
-    <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0" style={{ overflow: "visible" }}>
+    <svg
+      className="absolute top-0 left-0 w-full h-full pointer-events-none z-0"
+      style={{ overflow: 'visible' }}
+    >
       <line
         x1={from.x}
         y1={from.y}
@@ -186,345 +188,350 @@ function SkillConnector({
         className={`${getLineColor()} stroke-2 transition-colors duration-300`}
       />
     </svg>
-  )
+  );
 }
 
 // Main skill tree component
 export function SkillTree() {
-  const { theme } = useTheme()
-  const { toast } = useToast()
-  const [skillPoints, setSkillPoints] = useState(5)
-  const [selectedCategory, setSelectedCategory] = useState<SkillCategory>("Vigor")
+  const { theme } = useTheme();
+  const { toast } = useToast();
+  const [skillPoints, setSkillPoints] = useState(5);
+  const [selectedCategory, setSelectedCategory] = useState<SkillCategory>('Vigor');
 
   // Define skills for each category
   const [skills, setSkills] = useState<Skill[]>([
     // Vigor skills
     {
-      id: "vigor-1",
-      name: "Endurance",
-      description: "Increase your physical stamina",
+      id: 'vigor-1',
+      name: 'Endurance',
+      description: 'Increase your physical stamina',
       level: 1,
       maxLevel: 3,
-      category: "Vigor",
+      category: 'Vigor',
       icon: Heart,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Reduces fatigue by 10%", "Improves recovery time"],
+      effects: ['Reduces fatigue by 10%', 'Improves recovery time'],
     },
     {
-      id: "vigor-2",
-      name: "Vitality",
-      description: "Improve overall health and wellness",
+      id: 'vigor-2',
+      name: 'Vitality',
+      description: 'Improve overall health and wellness',
       level: 1,
       maxLevel: 3,
-      category: "Vigor",
+      category: 'Vigor',
       icon: Heart,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Increases energy levels", "Improves immune system"],
+      effects: ['Increases energy levels', 'Improves immune system'],
     },
     {
-      id: "vigor-3",
-      name: "Resilience",
-      description: "Bounce back from setbacks faster",
+      id: 'vigor-3',
+      name: 'Resilience',
+      description: 'Bounce back from setbacks faster',
       level: 1,
       maxLevel: 2,
-      category: "Vigor",
+      category: 'Vigor',
       icon: Heart,
       unlocked: false,
       acquired: false,
       cost: 2,
-      requires: ["vigor-1"],
-      effects: ["Reduces stress impact by 15%", "Faster recovery from illness"],
+      requires: ['vigor-1'],
+      effects: ['Reduces stress impact by 15%', 'Faster recovery from illness'],
     },
     {
-      id: "vigor-4",
-      name: "Iron Constitution",
-      description: "Develop exceptional physical resilience",
+      id: 'vigor-4',
+      name: 'Iron Constitution',
+      description: 'Develop exceptional physical resilience',
       level: 1,
       maxLevel: 3,
-      category: "Vigor",
+      category: 'Vigor',
       icon: Heart,
       unlocked: false,
       acquired: false,
       cost: 3,
-      requires: ["vigor-3"],
-      effects: ["Reduces sick days by 25%", "Improves sleep quality"],
+      requires: ['vigor-3'],
+      effects: ['Reduces sick days by 25%', 'Improves sleep quality'],
     },
 
     // Intelligence skills
     {
-      id: "intelligence-1",
-      name: "Quick Learning",
-      description: "Absorb information more efficiently",
+      id: 'intelligence-1',
+      name: 'Quick Learning',
+      description: 'Absorb information more efficiently',
       level: 1,
       maxLevel: 3,
-      category: "Intelligence",
+      category: 'Intelligence',
       icon: Brain,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Increases reading comprehension by 10%", "Improves memory retention"],
+      effects: ['Increases reading comprehension by 10%', 'Improves memory retention'],
     },
     {
-      id: "intelligence-2",
-      name: "Problem Solving",
-      description: "Find solutions to complex problems",
+      id: 'intelligence-2',
+      name: 'Problem Solving',
+      description: 'Find solutions to complex problems',
       level: 1,
       maxLevel: 3,
-      category: "Intelligence",
+      category: 'Intelligence',
       icon: Brain,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Enhances critical thinking", "Improves decision making"],
+      effects: ['Enhances critical thinking', 'Improves decision making'],
     },
     {
-      id: "intelligence-3",
-      name: "Deep Focus",
-      description: "Maintain concentration for longer periods",
+      id: 'intelligence-3',
+      name: 'Deep Focus',
+      description: 'Maintain concentration for longer periods',
       level: 1,
       maxLevel: 2,
-      category: "Intelligence",
+      category: 'Intelligence',
       icon: Brain,
       unlocked: false,
       acquired: false,
       cost: 2,
-      requires: ["intelligence-1"],
-      effects: ["Extends focus duration by 20%", "Reduces distractions"],
+      requires: ['intelligence-1'],
+      effects: ['Extends focus duration by 20%', 'Reduces distractions'],
     },
     {
-      id: "intelligence-4",
-      name: "Genius Insight",
-      description: "Gain profound understanding of complex topics",
+      id: 'intelligence-4',
+      name: 'Genius Insight',
+      description: 'Gain profound understanding of complex topics',
       level: 1,
       maxLevel: 3,
-      category: "Intelligence",
+      category: 'Intelligence',
       icon: Brain,
       unlocked: false,
       acquired: false,
       cost: 3,
-      requires: ["intelligence-3"],
-      effects: ["Unlocks advanced learning techniques", "Improves pattern recognition"],
+      requires: ['intelligence-3'],
+      effects: ['Unlocks advanced learning techniques', 'Improves pattern recognition'],
     },
 
     // Strength skills
     {
-      id: "strength-1",
-      name: "Discipline",
-      description: "Develop consistent habits",
+      id: 'strength-1',
+      name: 'Discipline',
+      description: 'Develop consistent habits',
       level: 1,
       maxLevel: 3,
-      category: "Strength",
+      category: 'Strength',
       icon: Dumbbell,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Increases habit consistency by 15%", "Improves self-control"],
+      effects: ['Increases habit consistency by 15%', 'Improves self-control'],
     },
     {
-      id: "strength-2",
-      name: "Willpower",
-      description: "Resist temptations and distractions",
+      id: 'strength-2',
+      name: 'Willpower',
+      description: 'Resist temptations and distractions',
       level: 1,
       maxLevel: 3,
-      category: "Strength",
+      category: 'Strength',
       icon: Dumbbell,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Reduces procrastination by 10%", "Improves task completion"],
+      effects: ['Reduces procrastination by 10%', 'Improves task completion'],
     },
     {
-      id: "strength-3",
-      name: "Mental Fortitude",
-      description: "Maintain composure under pressure",
+      id: 'strength-3',
+      name: 'Mental Fortitude',
+      description: 'Maintain composure under pressure',
       level: 1,
       maxLevel: 2,
-      category: "Strength",
+      category: 'Strength',
       icon: Dumbbell,
       unlocked: false,
       acquired: false,
       cost: 2,
-      requires: ["strength-1"],
-      effects: ["Reduces stress in difficult situations", "Improves decision making under pressure"],
+      requires: ['strength-1'],
+      effects: [
+        'Reduces stress in difficult situations',
+        'Improves decision making under pressure',
+      ],
     },
     {
-      id: "strength-4",
-      name: "Unbreakable Will",
-      description: "Achieve goals despite any obstacle",
+      id: 'strength-4',
+      name: 'Unbreakable Will',
+      description: 'Achieve goals despite any obstacle',
       level: 1,
       maxLevel: 3,
-      category: "Strength",
+      category: 'Strength',
       icon: Dumbbell,
       unlocked: false,
       acquired: false,
       cost: 3,
-      requires: ["strength-3"],
-      effects: ["Increases persistence by 25%", "Unlocks 'second wind' when fatigued"],
+      requires: ['strength-3'],
+      effects: ['Increases persistence by 25%', "Unlocks 'second wind' when fatigued"],
     },
 
     // Charisma skills
     {
-      id: "charisma-1",
-      name: "Clear Communication",
-      description: "Express ideas effectively",
+      id: 'charisma-1',
+      name: 'Clear Communication',
+      description: 'Express ideas effectively',
       level: 1,
       maxLevel: 3,
-      category: "Charisma",
+      category: 'Charisma',
       icon: Star,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Improves verbal clarity by 15%", "Reduces misunderstandings"],
+      effects: ['Improves verbal clarity by 15%', 'Reduces misunderstandings'],
     },
     {
-      id: "charisma-2",
-      name: "Active Listening",
-      description: "Understand others more deeply",
+      id: 'charisma-2',
+      name: 'Active Listening',
+      description: 'Understand others more deeply',
       level: 1,
       maxLevel: 3,
-      category: "Charisma",
+      category: 'Charisma',
       icon: Star,
       unlocked: true,
       acquired: false,
       cost: 1,
-      effects: ["Increases empathy", "Improves relationship quality"],
+      effects: ['Increases empathy', 'Improves relationship quality'],
     },
     {
-      id: "charisma-3",
-      name: "Persuasion",
-      description: "Convince others of your ideas",
+      id: 'charisma-3',
+      name: 'Persuasion',
+      description: 'Convince others of your ideas',
       level: 1,
       maxLevel: 2,
-      category: "Charisma",
+      category: 'Charisma',
       icon: Star,
       unlocked: false,
       acquired: false,
       cost: 2,
-      requires: ["charisma-1"],
-      effects: ["Enhances convincing arguments", "Improves negotiation outcomes"],
+      requires: ['charisma-1'],
+      effects: ['Enhances convincing arguments', 'Improves negotiation outcomes'],
     },
     {
-      id: "charisma-4",
-      name: "Inspiring Presence",
-      description: "Motivate and uplift those around you",
+      id: 'charisma-4',
+      name: 'Inspiring Presence',
+      description: 'Motivate and uplift those around you',
       level: 1,
       maxLevel: 3,
-      category: "Charisma",
+      category: 'Charisma',
       icon: Star,
       unlocked: false,
       acquired: false,
       cost: 3,
-      requires: ["charisma-3"],
-      effects: ["Creates positive atmosphere in groups", "Improves leadership capabilities"],
+      requires: ['charisma-3'],
+      effects: ['Creates positive atmosphere in groups', 'Improves leadership capabilities'],
     },
-  ])
+  ]);
 
   // Update skill tree based on prerequisites
   const updateSkillTree = () => {
     setSkills((prevSkills) => {
-      const newSkills = [...prevSkills]
+      const newSkills = [...prevSkills];
 
       // Check each skill to see if it should be unlocked
       newSkills.forEach((skill) => {
         if (skill.requires && !skill.unlocked) {
           const allRequirementsMet = skill.requires.every((reqId) => {
-            const requiredSkill = newSkills.find((s) => s.id === reqId)
-            return requiredSkill && requiredSkill.acquired
-          })
+            const requiredSkill = newSkills.find((s) => s.id === reqId);
+            return requiredSkill && requiredSkill.acquired;
+          });
 
           if (allRequirementsMet) {
-            skill.unlocked = true
+            skill.unlocked = true;
           }
         }
-      })
+      });
 
-      return newSkills
-    })
-  }
+      return newSkills;
+    });
+  };
 
   // Handle skill acquisition
   const handleSkillClick = (clickedSkill: Skill) => {
     if (skillPoints < clickedSkill.cost) {
       toast({
-        title: "Not enough skill points",
+        title: 'Not enough skill points',
         description: `You need ${clickedSkill.cost} skill points to acquire this skill.`,
-      })
-      return
+      });
+      return;
     }
 
     setSkills((prevSkills) => {
       return prevSkills.map((skill) => {
         if (skill.id === clickedSkill.id) {
-          return { ...skill, acquired: true }
+          return { ...skill, acquired: true };
         }
-        return skill
-      })
-    })
+        return skill;
+      });
+    });
 
-    setSkillPoints((prev) => prev - clickedSkill.cost)
+    setSkillPoints((prev) => prev - clickedSkill.cost);
 
     toast({
       title: `${clickedSkill.name} Acquired!`,
       description: `You've learned ${clickedSkill.name} (Level ${clickedSkill.level}/${clickedSkill.maxLevel})`,
-    })
+    });
 
     // Update skill tree after acquisition
-    setTimeout(updateSkillTree, 100)
-  }
+    setTimeout(updateSkillTree, 100);
+  };
 
   // Filter skills by selected category
-  const filteredSkills = skills.filter((skill) => skill.category === selectedCategory)
+  const filteredSkills = skills.filter((skill) => skill.category === selectedCategory);
 
   // Get theme-specific classes
   const getSkillTreeClass = () => {
     switch (theme) {
-      case "elden-ring":
-        return "elden-ring-skill-tree"
-      case "league":
-        return "league-skill-tree"
-      case "wow":
-        return "wow-skill-tree"
+      case 'elden-ring':
+        return 'elden-ring-skill-tree';
+      case 'league':
+        return 'league-skill-tree';
+      case 'wow':
+        return 'wow-skill-tree';
       default:
-        return ""
+        return '';
     }
-  }
+  };
 
   const getCategoryButtonClass = (category: SkillCategory) => {
-    const isActive = category === selectedCategory
+    const isActive = category === selectedCategory;
 
-    if (theme === "elden-ring") {
+    if (theme === 'elden-ring') {
       return isActive
-        ? "bg-amber-900/70 border-amber-500 text-amber-100"
-        : "bg-amber-950/30 border-amber-700/50 text-amber-200/70 hover:bg-amber-900/50 hover:border-amber-600"
-    } else if (theme === "league") {
+        ? 'bg-amber-900/70 border-amber-500 text-amber-100'
+        : 'bg-amber-950/30 border-amber-700/50 text-amber-200/70 hover:bg-amber-900/50 hover:border-amber-600';
+    } else if (theme === 'league') {
       return isActive
-        ? "bg-blue-900/70 border-blue-500 text-blue-100"
-        : "bg-blue-950/30 border-blue-700/50 text-blue-200/70 hover:bg-blue-900/50 hover:border-blue-600"
-    } else if (theme === "wow") {
+        ? 'bg-blue-900/70 border-blue-500 text-blue-100'
+        : 'bg-blue-950/30 border-blue-700/50 text-blue-200/70 hover:bg-blue-900/50 hover:border-blue-600';
+    } else if (theme === 'wow') {
       return isActive
-        ? "bg-blue-900/70 border-yellow-500 text-yellow-100"
-        : "bg-blue-950/30 border-yellow-700/50 text-yellow-200/70 hover:bg-blue-900/50 hover:border-yellow-600"
+        ? 'bg-blue-900/70 border-yellow-500 text-yellow-100'
+        : 'bg-blue-950/30 border-yellow-700/50 text-yellow-200/70 hover:bg-blue-900/50 hover:border-yellow-600';
     } else {
-      return isActive ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/80"
+      return isActive
+        ? 'bg-primary text-primary-foreground'
+        : 'bg-muted text-muted-foreground hover:bg-muted/80';
     }
-  }
+  };
 
   const getCategoryIcon = (category: SkillCategory) => {
     switch (category) {
-      case "Vigor":
-        return Heart
-      case "Intelligence":
-        return Brain
-      case "Strength":
-        return Dumbbell
-      case "Charisma":
-        return Star
+      case 'Vigor':
+        return Heart;
+      case 'Intelligence':
+        return Brain;
+      case 'Strength':
+        return Dumbbell;
+      case 'Charisma':
+        return Star;
     }
-  }
+  };
 
   return (
     <Card className={getSkillTreeClass()}>
@@ -540,20 +547,22 @@ export function SkillTree() {
       <CardContent className="space-y-6">
         {/* Category selector */}
         <div className="flex flex-wrap gap-2">
-          {(["Vigor", "Intelligence", "Strength", "Charisma"] as SkillCategory[]).map((category) => {
-            const Icon = getCategoryIcon(category)
-            return (
-              <Button
-                key={category}
-                variant="outline"
-                className={`flex items-center gap-2 border ${getCategoryButtonClass(category)}`}
-                onClick={() => setSelectedCategory(category)}
-              >
-                <Icon className="h-4 w-4" />
-                {category}
-              </Button>
-            )
-          })}
+          {(['Vigor', 'Intelligence', 'Strength', 'Charisma'] as SkillCategory[]).map(
+            (category) => {
+              const Icon = getCategoryIcon(category);
+              return (
+                <Button
+                  key={category}
+                  variant="outline"
+                  className={`flex items-center gap-2 border ${getCategoryButtonClass(category)}`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  <Icon className="h-4 w-4" />
+                  {category}
+                </Button>
+              );
+            }
+          )}
         </div>
 
         {/* Skill tree visualization */}
@@ -592,62 +601,62 @@ export function SkillTree() {
           ))}
 
           {/* Skill connections */}
-          {selectedCategory === "Vigor" && (
+          {selectedCategory === 'Vigor' && (
             <>
               <SkillConnector
                 from={{ x: 100, y: 80 }}
                 to={{ x: 100, y: 180 }}
-                acquired={skills.find((s) => s.id === "vigor-1")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'vigor-1')?.acquired || false}
               />
               <SkillConnector
                 from={{ x: 100, y: 180 }}
                 to={{ x: 100, y: 280 }}
-                acquired={skills.find((s) => s.id === "vigor-3")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'vigor-3')?.acquired || false}
               />
             </>
           )}
 
-          {selectedCategory === "Intelligence" && (
+          {selectedCategory === 'Intelligence' && (
             <>
               <SkillConnector
                 from={{ x: 100, y: 80 }}
                 to={{ x: 100, y: 180 }}
-                acquired={skills.find((s) => s.id === "intelligence-1")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'intelligence-1')?.acquired || false}
               />
               <SkillConnector
                 from={{ x: 100, y: 180 }}
                 to={{ x: 100, y: 280 }}
-                acquired={skills.find((s) => s.id === "intelligence-3")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'intelligence-3')?.acquired || false}
               />
             </>
           )}
 
-          {selectedCategory === "Strength" && (
+          {selectedCategory === 'Strength' && (
             <>
               <SkillConnector
                 from={{ x: 100, y: 80 }}
                 to={{ x: 100, y: 180 }}
-                acquired={skills.find((s) => s.id === "strength-1")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'strength-1')?.acquired || false}
               />
               <SkillConnector
                 from={{ x: 100, y: 180 }}
                 to={{ x: 100, y: 280 }}
-                acquired={skills.find((s) => s.id === "strength-3")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'strength-3')?.acquired || false}
               />
             </>
           )}
 
-          {selectedCategory === "Charisma" && (
+          {selectedCategory === 'Charisma' && (
             <>
               <SkillConnector
                 from={{ x: 100, y: 80 }}
                 to={{ x: 100, y: 180 }}
-                acquired={skills.find((s) => s.id === "charisma-1")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'charisma-1')?.acquired || false}
               />
               <SkillConnector
                 from={{ x: 100, y: 180 }}
                 to={{ x: 100, y: 280 }}
-                acquired={skills.find((s) => s.id === "charisma-3")?.acquired || false}
+                acquired={skills.find((s) => s.id === 'charisma-3')?.acquired || false}
               />
             </>
           )}
@@ -670,6 +679,5 @@ export function SkillTree() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

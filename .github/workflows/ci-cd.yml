@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - working  # Trigger on push to the main branch
+      - dev  # Trigger on push to the main branch
   pull_request:
     branches:
       - main  # Trigger on pull requests to the main branch
@@ -100,11 +100,11 @@ jobs:
             git config user.name "GitHub Actions"
             git config user.email "actions@github.com"
 
-        - name: Merge working branch to main
+        - name: Merge dev branch to main
           run: |
             git checkout main
             git pull
-            git merge --no-ff working -m "Auto-merge working to main [skip ci]"
+            git merge --no-ff dev -m "Auto-merge dev to main [skip ci]"
             git push origin main
 
   deploy:

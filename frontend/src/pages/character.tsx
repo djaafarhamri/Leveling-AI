@@ -1,23 +1,23 @@
-"use client"
+'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card"
-import { Progress } from "../components/ui/progress"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
-import { Heart, Brain, Dumbbell, Star, Award, TrendingUp, History, Swords } from "lucide-react"
-import { Button } from "../components/ui/button"
-import { useToast } from "../hooks/use-toast"
-import { SkillTree } from "../components/skill-tree"
-import { Link } from "react-router-dom"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Progress } from '../components/ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import { Heart, Brain, Dumbbell, Star, Award, TrendingUp, History, Swords } from 'lucide-react';
+import { Button } from '../components/ui/button';
+import { useToast } from '../hooks/use-toast';
+import { SkillTree } from '../components/skill-tree';
+import { Link } from 'react-router-dom';
 
 export default function CharacterPage() {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const handleStatUpgrade = (stat: string) => {
     toast({
       title: `${stat} upgraded!`,
       description: "You've spent 1 skill point to upgrade this stat.",
-    })
-  }
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -82,7 +82,9 @@ export default function CharacterPage() {
                   </div>
                   <div>
                     <div className="font-medium">Early Riser</div>
-                    <div className="text-xs text-muted-foreground">Completed 5 morning challenges</div>
+                    <div className="text-xs text-muted-foreground">
+                      Completed 5 morning challenges
+                    </div>
                   </div>
                 </div>
 
@@ -102,7 +104,9 @@ export default function CharacterPage() {
                   </div>
                   <div>
                     <div className="font-medium">Fitness Enthusiast</div>
-                    <div className="text-xs text-muted-foreground">Completed 15 workout challenges</div>
+                    <div className="text-xs text-muted-foreground">
+                      Completed 15 workout challenges
+                    </div>
                   </div>
                 </div>
               </div>
@@ -120,7 +124,8 @@ export default function CharacterPage() {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Take on epic challenges that will push your skills to the limit and earn special rewards.
+                Take on epic challenges that will push your skills to the limit and earn special
+                rewards.
               </p>
               <Button asChild className="w-full">
                 <Link to="/challenges?tab=boss">View Boss Challenges</Link>
@@ -149,12 +154,18 @@ export default function CharacterPage() {
                         <Heart className="h-5 w-5 text-red-500" />
                         <div>
                           <div className="font-medium">Vigor</div>
-                          <div className="text-xs text-muted-foreground">Physical health & energy</div>
+                          <div className="text-xs text-muted-foreground">
+                            Physical health & energy
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-xl font-bold">72</div>
-                        <Button size="sm" variant="outline" onClick={() => handleStatUpgrade("Vigor")}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleStatUpgrade('Vigor')}
+                        >
                           Upgrade
                         </Button>
                       </div>
@@ -166,12 +177,18 @@ export default function CharacterPage() {
                         <Brain className="h-5 w-5 text-blue-500" />
                         <div>
                           <div className="font-medium">Intelligence</div>
-                          <div className="text-xs text-muted-foreground">Learning & problem solving</div>
+                          <div className="text-xs text-muted-foreground">
+                            Learning & problem solving
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-xl font-bold">85</div>
-                        <Button size="sm" variant="outline" onClick={() => handleStatUpgrade("Intelligence")}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleStatUpgrade('Intelligence')}
+                        >
                           Upgrade
                         </Button>
                       </div>
@@ -183,12 +200,18 @@ export default function CharacterPage() {
                         <Dumbbell className="h-5 w-5 text-amber-500" />
                         <div>
                           <div className="font-medium">Strength</div>
-                          <div className="text-xs text-muted-foreground">Discipline & resilience</div>
+                          <div className="text-xs text-muted-foreground">
+                            Discipline & resilience
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-xl font-bold">64</div>
-                        <Button size="sm" variant="outline" onClick={() => handleStatUpgrade("Strength")}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleStatUpgrade('Strength')}
+                        >
                           Upgrade
                         </Button>
                       </div>
@@ -200,12 +223,18 @@ export default function CharacterPage() {
                         <Star className="h-5 w-5 text-purple-500" />
                         <div>
                           <div className="font-medium">Charisma</div>
-                          <div className="text-xs text-muted-foreground">Social skills & influence</div>
+                          <div className="text-xs text-muted-foreground">
+                            Social skills & influence
+                          </div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
                         <div className="text-xl font-bold">78</div>
-                        <Button size="sm" variant="outline" onClick={() => handleStatUpgrade("Charisma")}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleStatUpgrade('Charisma')}
+                        >
                           Upgrade
                         </Button>
                       </div>
@@ -263,6 +292,5 @@ export default function CharacterPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

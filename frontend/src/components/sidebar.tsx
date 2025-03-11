@@ -1,29 +1,29 @@
-"use client"
+'use client';
 
-import { Link, useLocation } from "react-router-dom"
-import { cn } from "../lib/utils"
-import { Button } from "./ui/button"
-import { Home, User, Trophy, Settings, Menu, X, LogOut, Map } from "lucide-react"
-import { useIsMobile } from "../hooks/use-mobile"
-import { useTheme } from "./theme-provider"
+import { Link, useLocation } from 'react-router-dom';
+import { cn } from '../lib/utils';
+import { Button } from './ui/button';
+import { Home, User, Trophy, Settings, Menu, X, LogOut } from 'lucide-react';
+import { useIsMobile } from '../hooks/use-mobile';
+import { useTheme } from './theme-provider';
 
 interface SidebarProps {
-  open: boolean
-  setOpen: (open: boolean) => void
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
 export default function Sidebar({ open, setOpen }: SidebarProps) {
-  const location = useLocation()
-  const isMobile = useIsMobile()
-  const { theme } = useTheme()
+  const location = useLocation();
+  const isMobile = useIsMobile();
+  const { theme } = useTheme();
 
   const navItems = [
-    { icon: Home, label: "Dashboard", path: "/" },
-    { icon: User, label: "Character", path: "/character" },
-    { icon: Trophy, label: "Challenges", path: "/challenges" },
+    { icon: Home, label: 'Dashboard', path: '/' },
+    { icon: User, label: 'Character', path: '/character' },
+    { icon: Trophy, label: 'Challenges', path: '/challenges' },
     // { icon: Map, label: "World", path: "/world" },
-    { icon: Settings, label: "Settings", path: "/settings" },
-  ]
+    { icon: Settings, label: 'Settings', path: '/settings' },
+  ];
 
   return (
     <>
@@ -35,21 +35,21 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
 
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border transform transition-transform duration-200 ease-in-out md:translate-x-0 sidebar",
-          open ? "translate-x-0" : "-translate-x-full",
+          'fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border transform transition-transform duration-200 ease-in-out md:translate-x-0 sidebar',
+          open ? 'translate-x-0' : '-translate-x-full'
         )}
       >
         <div className="flex items-center justify-between h-16 px-6 border-b border-border">
           <h1
             className={cn(
-              "text-xl font-bold text-primary font-display",
-              theme === "elden-ring"
-                ? "elden-ring-text-glow"
-                : theme === "league"
-                  ? "league-text-glow"
-                  : theme === "wow"
-                    ? "wow-text-glow"
-                    : "",
+              'text-xl font-bold text-primary font-display',
+              theme === 'elden-ring'
+                ? 'elden-ring-text-glow'
+                : theme === 'league'
+                  ? 'league-text-glow'
+                  : theme === 'wow'
+                    ? 'wow-text-glow'
+                    : ''
             )}
           >
             RPG Growth
@@ -66,10 +66,10 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
                 key={item.path}
                 to={item.path}
                 className={cn(
-                  "flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors sidebar-nav-item",
+                  'flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors sidebar-nav-item',
                   location.pathname === item.path
-                    ? "bg-primary text-primary-foreground active"
-                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                    ? 'bg-primary text-primary-foreground active'
+                    : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                 )}
               >
                 <item.icon className="mr-3 h-5 w-5" />
@@ -88,8 +88,9 @@ export default function Sidebar({ open, setOpen }: SidebarProps) {
       </div>
 
       {/* Overlay to close sidebar on mobile */}
-      {isMobile && open && <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setOpen(false)} />}
+      {isMobile && open && (
+        <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setOpen(false)} />
+      )}
     </>
-  )
+  );
 }
-

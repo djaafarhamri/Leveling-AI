@@ -1,39 +1,44 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Check, ChevronDown } from "lucide-react"
-import { Button } from "./ui/button"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
-import { Theme, useTheme } from "./theme-provider"
+import { useState } from 'react';
+import { Check, ChevronDown } from 'lucide-react';
+import { Button } from './ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
+import { Theme, useTheme } from './theme-provider';
 
-const themes:{id: Theme, name: string, description: string}[] = [
+const themes: { id: Theme; name: string; description: string }[] = [
   {
-    id: "default",
-    name: "Professional",
-    description: "Clean, modern interface",
+    id: 'default',
+    name: 'Professional',
+    description: 'Clean, modern interface',
   },
   {
-    id: "elden-ring",
-    name: "Elden Ring",
-    description: "Dark fantasy aesthetic",
+    id: 'elden-ring',
+    name: 'Elden Ring',
+    description: 'Dark fantasy aesthetic',
   },
   {
-    id: "league",
-    name: "League of Legends",
-    description: "Vibrant, arcane style",
+    id: 'league',
+    name: 'League of Legends',
+    description: 'Vibrant, arcane style',
   },
   {
-    id: "wow",
-    name: "World of Warcraft",
-    description: "Epic fantasy theme",
+    id: 'wow',
+    name: 'World of Warcraft',
+    description: 'Epic fantasy theme',
   },
-]
+];
 
 export function ThemeSwitcher() {
-  const { theme, setTheme } = useTheme()
-  const [open, setOpen] = useState(false)
+  const { theme, setTheme } = useTheme();
+  const [open, setOpen] = useState(false);
 
-  const currentTheme = themes.find((t) => t.id === theme) || themes[0]
+  const currentTheme = themes.find((t) => t.id === theme) || themes[0];
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -49,8 +54,8 @@ export function ThemeSwitcher() {
             key={t.id}
             className="flex items-center justify-between cursor-pointer"
             onClick={() => {
-              setTheme(t.id)
-              setOpen(false)
+              setTheme(t.id);
+              setOpen(false);
             }}
           >
             <div>
@@ -62,6 +67,5 @@ export function ThemeSwitcher() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
-

@@ -22,7 +22,7 @@
   "git": {
     "deploymentEnabled": {
       "main": false,
-      "working": false
+      "dev": false
     }
   }
 }
