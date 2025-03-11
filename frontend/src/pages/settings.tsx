@@ -15,7 +15,7 @@ import {
 } from '../components/ui/select';
 import { Separator } from '../components/ui/separator';
 import { useToast } from '../hooks/use-toast';
-import { useTheme } from '../components/theme-provider';
+import { Theme, useTheme } from '../components/theme-provider';
 
 export default function SettingsPage() {
   const { toast } = useToast();
@@ -120,7 +120,7 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="theme">Theme</Label>
-                <Select value={theme} onValueChange={(value) => setTheme(value as any)}>
+                <Select value={theme} onValueChange={(value) => setTheme(value as Theme)}>
                   <SelectTrigger id="theme">
                     <SelectValue placeholder="Select theme" />
                   </SelectTrigger>

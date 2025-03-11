@@ -37,7 +37,7 @@ interface SkillNodeProps {
 // Individual skill node component
 function SkillNode({ skill, onClick, canUnlock, skillPoints }: SkillNodeProps) {
   const { theme } = useTheme();
-
+  console.log(canUnlock)
   // Get theme-specific classes
   const getNodeClass = () => {
     const baseClass = 'relative p-3 rounded-lg border transition-all duration-200';

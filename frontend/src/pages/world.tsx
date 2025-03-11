@@ -8,7 +8,7 @@ import { RegionChallenges } from '../components/region-challenges';
 import { Map, BookOpen, Trophy } from 'lucide-react';
 
 export default function WorldPage() {
-  const [selectedRegion, setSelectedRegion] = useState('mountains-of-focus');
+  const [selectedRegion,] = useState('mountains-of-focus');
 
   return (
     <div className="space-y-6">
