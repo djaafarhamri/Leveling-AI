@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '../../index'; // Adjust path to your Express app
-import prisma from '../../prisma/prismaClient';
+import app from '../../index.js'; // Adjust path to your Express app
+import prisma from '../../prisma/prismaClient.js';
 
 // Clean up between tests
 beforeEach(async () => {
