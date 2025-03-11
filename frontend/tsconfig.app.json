@@ -25,5 +25,5 @@
   "include": [
     "src",
     "src/setupTests.ts"
-  ]
+, "tailwind.config.js"  ]
 }

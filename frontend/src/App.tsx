@@ -1,30 +1,36 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { ThemeProvider } from "./components/theme-provider"
+import { Toaster } from "./components/ui/toaster"
+import { ThemePlaceholder } from "./components/theme-placeholder"
+import Dashboard from "./pages/dashboard"
+import CharacterPage from "./pages/character"
+import ChallengesPage from "./pages/challenges"
+import SettingsPage from "./pages/settings"
+import LoginPage from "./pages/login"
+import SignupPage from "./pages/signup"
+import Layout from "./components/layout"
 
 function App() {
-  const [count, setCount] = useState(1);
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={reactLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count * 2)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
+    <ThemeProvider defaultTheme="default">
+      <ThemePlaceholder />
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="character" element={<CharacterPage />} />
+            <Route path="challenges" element={<ChallengesPage />} />
+            {/* <Route path="world" element={<WorldPage />} /> Add this route */}
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+        </Routes>
+      </Router>
+      <Toaster />
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
+

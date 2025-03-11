@@ -1,71 +1,908 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: light dark;
-  color: rgb(255 255 255 / 87%);
-  background-color: #242424;
-  font-synthesis: none;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-
-button:hover {
-  border-color: #646cff;
-}
-
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
+  /* Default Professional Theme */
   :root {
-    color: #213547;
-    background-color: #fff;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+
+    /* Font settings */
+    --font-sans: "Inter", sans-serif;
+    --font-display: var(--font-sans);
+
+    /* UI Elements */
+    --card-border-width: 1px;
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --button-shadow: none;
   }
 
-  a:hover {
-    color: #747bff;
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 262.1 83.3% 57.8%;
   }
 
-  button {
-    background-color: #f9f9f9;
+  /* Elden Ring Theme */
+  .elden-ring {
+    --background: 40 12% 5%;
+    --foreground: 40 30% 92%;
+    --card: 40 15% 8%;
+    --card-foreground: 40 30% 92%;
+    --popover: 40 15% 8%;
+    --popover-foreground: 40 30% 92%;
+    --primary: 36 100% 50%;
+    --primary-foreground: 40 15% 8%;
+    --secondary: 40 10% 15%;
+    --secondary-foreground: 40 30% 92%;
+    --muted: 40 10% 12%;
+    --muted-foreground: 40 20% 70%;
+    --accent: 36 100% 50%;
+    --accent-foreground: 40 15% 8%;
+    --destructive: 0 60% 40%;
+    --destructive-foreground: 40 30% 92%;
+    --border: 40 15% 15%;
+    --input: 40 15% 15%;
+    --ring: 36 100% 50%;
+    --radius: 0.25rem;
+
+    /* Font settings */
+    --font-sans: "Cinzel", serif;
+    --font-display: "Cinzel Decorative", serif;
+
+    /* UI Elements */
+    --card-border-width: 2px;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    --button-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* League of Legends Theme */
+  .league {
+    --background: 220 40% 10%;
+    --foreground: 210 40% 98%;
+    --card: 220 40% 13%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 40% 13%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 195 100% 50%;
+    --primary-foreground: 220 40% 13%;
+    --secondary: 220 30% 20%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 30% 16%;
+    --muted-foreground: 210 30% 80%;
+    --accent: 280 100% 60%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 30% 20%;
+    --input: 220 30% 20%;
+    --ring: 195 100% 50%;
+    --radius: 0.125rem;
+
+    /* Font settings */
+    --font-sans: "Beaufort for LOL", sans-serif;
+    --font-display: "Beaufort for LOL", sans-serif;
+
+    /* UI Elements */
+    --card-border-width: 1px;
+    --card-shadow: 0 0 10px rgba(0, 149, 255, 0.3);
+    --button-shadow: 0 0 8px rgba(0, 149, 255, 0.5);
+  }
+
+  /* World of Warcraft Theme */
+  .wow {
+    --background: 215 50% 15%;
+    --foreground: 40 30% 92%;
+    --card: 215 50% 20%;
+    --card-foreground: 40 30% 92%;
+    --popover: 215 50% 20%;
+    --popover-foreground: 40 30% 92%;
+    --primary: 45 100% 50%;
+    --primary-foreground: 215 50% 15%;
+    --secondary: 215 40% 30%;
+    --secondary-foreground: 40 30% 92%;
+    --muted: 215 40% 25%;
+    --muted-foreground: 40 20% 70%;
+    --accent: 215 70% 50%;
+    --accent-foreground: 40 30% 92%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 40 30% 92%;
+    --border: 215 40% 30%;
+    --input: 215 40% 30%;
+    --ring: 45 100% 50%;
+    --radius: 0.25rem;
+
+    /* Font settings */
+    --font-sans: "Friz Quadrata", serif;
+    --font-display: "Friz Quadrata", serif;
+
+    /* UI Elements */
+    --card-border-width: 3px;
+    --card-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    --button-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
   }
 }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Apply theme-specific font families */
+  .elden-ring {
+    font-family: var(--font-sans);
+    background-image: url("/elden-ring-bg.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: hsl(var(--background));
+    background-blend-mode: overlay;
+  }
+  .elden-ring h1,
+  .elden-ring h2,
+  .elden-ring h3,
+  .elden-ring .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+
+  .league {
+    font-family: var(--font-sans);
+    background-image: url("/league-bg.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: hsl(var(--background));
+    background-blend-mode: overlay;
+  }
+  .league h1,
+  .league h2,
+  .league h3,
+  .league .font-display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .wow {
+    font-family: var(--font-sans);
+    background-image: url("/wow-bg.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: hsl(var(--background));
+    background-blend-mode: overlay;
+  }
+  .wow h1,
+  .wow h2,
+  .wow h3,
+  .wow .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.03em;
+  }
+}
+
+/* Theme-specific component styles */
+@layer components {
+  /* Elden Ring */
+  .elden-ring-card {
+    @apply relative border-2 bg-gradient-to-b from-card to-card/90;
+    border-image: url("/elden-ring-border.png") 24 stretch;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .elden-ring-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/elden-ring-texture.png");
+    background-size: cover;
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .elden-ring-button {
+    @apply relative bg-gradient-to-r from-amber-600 to-amber-500 text-amber-950 font-semibold;
+    border: 2px solid #8a6e27;
+    box-shadow: 0 0 10px rgba(255, 191, 0, 0.3);
+  }
+
+  .elden-ring-button::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #8a6e27, transparent, #8a6e27);
+    z-index: -1;
+    animation: border-glow 2s linear infinite;
+  }
+
+  .elden-ring-button-outline {
+    @apply border-2 border-amber-700/50 text-amber-200;
+    box-shadow: 0 0 5px rgba(255, 191, 0, 0.2);
+  }
+
+  .elden-ring-progress-bar {
+    @apply bg-amber-900/50 border border-amber-700/50;
+  }
+
+  .elden-ring-progress-value {
+    @apply bg-gradient-to-r from-amber-600 to-amber-500;
+    box-shadow: 0 0 8px rgba(255, 191, 0, 0.5);
+  }
+
+  /* League of Legends */
+  .league-card {
+    @apply relative border bg-gradient-to-b from-card to-card/90;
+    border-image: url("/league-border.png") 30 stretch;
+    box-shadow: 0 0 15px rgba(0, 149, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .league-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/league-texture.png");
+    background-size: cover;
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .league-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #0095ff, transparent);
+    animation: scan-line 2s linear infinite;
+  }
+
+  .league-button {
+    @apply relative bg-gradient-to-r from-blue-600 to-blue-400 text-white font-bold;
+    border: 1px solid #0095ff;
+    box-shadow: 0 0 10px rgba(0, 149, 255, 0.5);
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+  }
+
+  .league-button-outline {
+    @apply border border-blue-500/30 text-blue-200;
+    box-shadow: 0 0 5px rgba(0, 149, 255, 0.2);
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+  }
+
+  .league-progress-bar {
+    @apply bg-blue-900/50 border border-blue-700/30;
+    clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+  }
+
+  .league-progress-value {
+    @apply bg-gradient-to-r from-blue-500 to-cyan-400;
+    box-shadow: 0 0 8px rgba(0, 149, 255, 0.5);
+  }
+
+  /* World of Warcraft */
+  .wow-card {
+    @apply relative border-2 bg-gradient-to-b from-card to-card/90;
+    border-image: url("/wow-border.png") 30 stretch;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wow-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("/wow-texture.png");
+    background-size: cover;
+    opacity: 0.05;
+    pointer-events: none;
+  }
+
+  .wow-button {
+    @apply relative bg-gradient-to-r from-yellow-600 to-yellow-500 text-blue-950 font-bold;
+    border: 2px solid #c8a030;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    border-radius: 0;
+    position: relative;
+  }
+
+  .wow-button::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background-image: url("/wow-button-border.png");
+    background-size: 100% 100%;
+    z-index: -1;
+  }
+
+  .wow-button-outline {
+    @apply border-2 border-yellow-600/50 text-yellow-200;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+  }
+
+  .wow-progress-bar {
+    @apply bg-blue-900/50 border-2 border-yellow-700/50;
+  }
+
+  .wow-progress-value {
+    @apply bg-gradient-to-r from-yellow-500 to-yellow-400;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+  }
+}
+
+/* Animations */
+@keyframes border-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(800px);
+  }
+}
+
+/* Additional utility classes */
+.elden-ring-text-glow {
+  text-shadow: 0 0 5px rgba(255, 191, 0, 0.7);
+}
+
+.league-text-glow {
+  text-shadow: 0 0 5px rgba(0, 149, 255, 0.7);
+}
+
+.wow-text-glow {
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+}
+
+/* Sidebar styling for each theme */
+.elden-ring .sidebar {
+  @apply bg-amber-950/90 border-r-2;
+  border-image: url("/elden-ring-border.png") 24 stretch;
+}
+
+.elden-ring .sidebar-nav-item {
+  @apply bg-amber-900/30 border border-amber-700/50 hover:bg-amber-800/50;
+}
+
+.elden-ring .sidebar-nav-item.active {
+  @apply bg-amber-800/70 border-amber-600;
+  box-shadow: 0 0 10px rgba(255, 191, 0, 0.3);
+}
+
+.league .sidebar {
+  @apply bg-blue-950/90 border-r;
+  border-image: url("/league-border.png") 30 stretch;
+}
+
+.league .sidebar-nav-item {
+  @apply bg-blue-900/30 border border-blue-700/30 hover:bg-blue-800/50;
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+}
+
+.league .sidebar-nav-item.active {
+  @apply bg-blue-800/70 border-blue-500;
+  box-shadow: 0 0 10px rgba(0, 149, 255, 0.5);
+}
+
+.wow .sidebar {
+  @apply bg-blue-950/90 border-r-2;
+  border-image: url("/wow-border.png") 30 stretch;
+}
+
+.wow .sidebar-nav-item {
+  @apply bg-blue-900/30 border-2 border-yellow-700/50 hover:bg-blue-800/50;
+}
+
+.wow .sidebar-nav-item.active {
+  @apply bg-blue-800/70 border-yellow-500;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+/* Milestone styling for different themes */
+.elden-ring-milestone {
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(26, 19, 6, 0.9);
+  border-image: url("/elden-ring-border.png") 24 stretch;
+  box-shadow: 0 2px 6px rgba(255, 191, 0, 0.2);
+}
+
+.league-milestone {
+  background-image: url("/league-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 42, 0.9);
+  border-image: url("/league-border.png") 30 stretch;
+  clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
+  box-shadow: 0 0 8px rgba(0, 149, 255, 0.3);
+}
+
+.wow-milestone {
+  background-image: url("/wow-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 48, 0.9);
+  border-image: url("/wow-border.png") 30 stretch;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Story quest styling for different themes */
+.elden-ring-story {
+  position: relative;
+}
+
+.elden-ring-story::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.league-story {
+  position: relative;
+}
+
+.league-story::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, #0095ff, transparent);
+  animation: scan-line-vertical 3s linear infinite;
+}
+
+.wow-story {
+  position: relative;
+}
+
+.wow-story::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  background-image: url("/wow-border.png");
+  background-size: 100% 100%;
+  z-index: -1;
+  opacity: 0.3;
+}
+
+@keyframes scan-line-vertical {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Boss challenge styling for different themes */
+.elden-ring-boss {
+  border-width: 3px;
+  border-image: url("/elden-ring-border.png") 24 stretch;
+  box-shadow: 0 0 15px rgba(255, 191, 0, 0.3);
+}
+
+.elden-ring-boss::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.league-boss {
+  border-width: 2px;
+  border-image: url("/league-border.png") 30 stretch;
+  box-shadow: 0 0 20px rgba(0, 149, 255, 0.4);
+  clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+}
+
+.league-boss::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #0095ff, transparent);
+  animation: scan-line 2s linear infinite;
+}
+
+.wow-boss {
+  border-width: 4px;
+  border-image: url("/wow-border.png") 30 stretch;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.wow-boss::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/wow-texture.png");
+  background-size: cover;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+/* Skill tree styling for different themes */
+.elden-ring-skill-tree {
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(26, 19, 6, 0.8);
+  border-image: url("/elden-ring-border.png") 24 stretch;
+}
+
+.elden-ring-skill-acquired {
+  box-shadow: 0 0 15px rgba(255, 191, 0, 0.4);
+}
+
+.elden-ring-skill-available {
+  position: relative;
+}
+
+.elden-ring-skill-available::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, rgba(255, 191, 0, 0.3), transparent, rgba(255, 191, 0, 0.3));
+  z-index: -1;
+  animation: border-pulse 2s linear infinite;
+  pointer-events: none;
+}
+
+.league-skill-tree {
+  background-image: url("/league-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 42, 0.8);
+  border-image: url("/league-border.png") 30 stretch;
+}
+
+.league-skill-acquired {
+  box-shadow: 0 0 15px rgba(0, 149, 255, 0.4);
+}
+
+.league-skill-available {
+  position: relative;
+}
+
+.league-skill-available::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 149, 255, 0.7), transparent);
+  animation: scan-line 2s linear infinite;
+  pointer-events: none;
+}
+
+.wow-skill-tree {
+  background-image: url("/wow-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 48, 0.8);
+  border-image: url("/wow-border.png") 30 stretch;
+}
+
+.wow-skill-acquired {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.wow-skill-available {
+  position: relative;
+}
+
+.wow-skill-available::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background-image: url("/wow-button-border.png");
+  background-size: 100% 100%;
+  z-index: -1;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@keyframes border-pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* World building styling for different themes */
+.elden-ring-world-map {
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(26, 19, 6, 0.8);
+  border-image: url("/elden-ring-border.png") 24 stretch;
+}
+
+.elden-ring-location-selected {
+  box-shadow: 0 0 15px rgba(255, 191, 0, 0.4);
+}
+
+.elden-ring-location {
+  position: relative;
+}
+
+.elden-ring-location::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, rgba(255, 191, 0, 0.1), transparent, rgba(255, 191, 0, 0.1));
+  z-index: -1;
+  pointer-events: none;
+}
+
+.league-world-map {
+  background-image: url("/league-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 42, 0.8);
+  border-image: url("/league-border.png") 30 stretch;
+}
+
+.league-location-selected {
+  box-shadow: 0 0 15px rgba(0, 149, 255, 0.4);
+}
+
+.league-location {
+  position: relative;
+}
+
+.league-location::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 149, 255, 0.5), transparent);
+  animation: scan-line 2s linear infinite;
+  pointer-events: none;
+}
+
+.wow-world-map {
+  background-image: url("/wow-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 48, 0.8);
+  border-image: url("/wow-border.png") 30 stretch;
+}
+
+.wow-location-selected {
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.wow-location {
+  position: relative;
+}
+
+.wow-location::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background-image: url("/wow-button-border.png");
+  background-size: 100% 100%;
+  z-index: -1;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* Lore book styling */
+.elden-ring-lore-book {
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(26, 19, 6, 0.9);
+  border-image: url("/elden-ring-border.png") 24 stretch;
+}
+
+.league-lore-book {
+  background-image: url("/league-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 42, 0.9);
+  border-image: url("/league-border.png") 30 stretch;
+}
+
+.wow-lore-book {
+  background-image: url("/wow-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 48, 0.9);
+  border-image: url("/wow-border.png") 30 stretch;
+}
+
+/* Region styling */
+.elden-ring-region {
+  background-image: url("/elden-ring-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(26, 19, 6, 0.8);
+  border-image: url("/elden-ring-border.png") 24 stretch;
+}
+
+.league-region {
+  background-image: url("/league-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 42, 0.8);
+  border-image: url("/league-border.png") 30 stretch;
+}
+
+.wow-region {
+  background-image: url("/wow-texture.png");
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba(10, 26, 48, 0.8);
+  border-image: url("/wow-border.png") 30 stretch;
+}
+
+/* World building styling for different themes - CSS-only version */
+/* Custom theme classes that don't override Tailwind utilities */
+.world-elden-bg {
+  background-color: rgba(26, 19, 6, 0.8);
+}
+
+.world-elden-border {
+  border-color: #8a6e27;
+  border-width: 2px;
+}
+
+.world-elden-highlight-bg {
+  background-color: rgba(120, 80, 20, 0.5);
+}
+
+.world-elden-highlight-border {
+  border-color: #d4a72c;
+  border-width: 2px;
+}
+
+/* League of Legends theme */
+.world-league-bg {
+  background-color: rgba(10, 26, 42, 0.8);
+}
+
+.world-league-border {
+  border-color: #0066cc;
+  border-width: 1px;
+}
+
+.world-league-highlight-bg {
+  background-color: rgba(20, 50, 90, 0.5);
+}
+
+.world-league-highlight-border {
+  border-color: #0095ff;
+  border-width: 1px;
+}
+
+/* World of Warcraft theme */
+.world-wow-bg {
+  background-color: rgba(10, 26, 48, 0.8);
+}
+
+.world-wow-border {
+  border-color: #c8a030;
+  border-width: 3px;
+}
+
+.world-wow-highlight-bg {
+  background-color: rgba(20, 50, 100, 0.5);
+}
+
+.world-wow-highlight-border {
+  border-color: #ffd700;
+  border-width: 3px;
+}
+
