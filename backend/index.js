@@ -1,5 +1,5 @@
 import express from 'express';
-import logger from './logging/logger';
+import logger from './logging/logger.js';
 const app = express();
 
 // Middleware for parsing JSON
