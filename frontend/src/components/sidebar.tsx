@@ -3,7 +3,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '../lib/utils';
 import { Button } from './ui/button';
-import { Home, User, Trophy, Settings, Menu, X, LogOut} from 'lucide-react';
+import { Home, User, Trophy, Settings, Menu, X, LogOut } from 'lucide-react';
 import { useIsMobile } from '../hooks/use-mobile';
 import { useTheme } from './theme-provider';
 
